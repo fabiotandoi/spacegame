@@ -1,4 +1,5 @@
 import { Sprite } from '../../factory/sprite.interface';
+import { InputHandler } from '../../utils/input';
 
 export class Missile implements Sprite {
     x: number = 0;
@@ -13,6 +14,7 @@ export class Missile implements Sprite {
         this.image = image;
         this.canvasHeight = canvas.height;
     }
+    inputHandler: InputHandler;
     getImage(): HTMLImageElement {
         return this.image;
     }

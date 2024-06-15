@@ -1,4 +1,6 @@
+import { SpriteFactory } from '../../factory/sprite.factory';
 import { Sprite } from '../../factory/sprite.interface';
+import { InputHandler } from '../../utils/input';
 import { Missile } from './missile.sprite';
 
 export class Spaceship implements Sprite {
@@ -17,7 +19,7 @@ export class Spaceship implements Sprite {
     canvas: HTMLCanvasElement;
     missiles: Missile[] = [];
     missileImage: HTMLImageElement;
-
+    inputHandler: InputHandler = new InputHandler();
 
     constructor(image: HTMLImageElement, canvas: HTMLCanvasElement) {
         this.image = image;
@@ -39,18 +41,20 @@ export class Spaceship implements Sprite {
         this.y = y;
     }
 
-    updatePosition(acceleration: number, friction: number, maxSpeed: number, keys: { [key: string]: boolean }) {
-        if (keys['ArrowUp']) this.velocityY -= acceleration;
-        if (keys['ArrowDown']) this.velocityY += acceleration;
-        if (keys['ArrowLeft']) this.velocityX -= acceleration;
-        if (keys['ArrowRight']) this.velocityX += acceleration;
+    updatePosition() {
+        let keys = this.inputHandler.keys;
 
-        this.velocityX *= friction;
-        this.velocityY *= friction;
+        if (keys['ArrowUp']) this.velocityY -= this.acceleration;
+        if (keys['ArrowDown']) this.velocityY += this.acceleration;
+        if (keys['ArrowLeft']) this.velocityX -= this.acceleration;
+        if (keys['ArrowRight']) this.velocityX += this.acceleration;
+
+        this.velocityX *= this.friction;
+        this.velocityY *= this.friction;
 
         const speed = Math.sqrt(this.velocityX ** 2 + this.velocityY ** 2);
-        if (speed > maxSpeed) {
-            const scale = maxSpeed / speed;
+        if (speed > this.maxSpeed) {
+            const scale = this.maxSpeed / speed;
             this.velocityX *= scale;
             this.velocityY *= scale;
         }
@@ -67,10 +71,11 @@ export class Spaceship implements Sprite {
         this.missiles = this.missiles.filter(missile => !missile.isOffScreen());
     }
 
-    shoot() {
-        const missile = new Missile( this.missileImage, this.canvas);
+    shoot(weapon: Missile) {
+        this.missileImage = weapon.getImage();
+        const missile = SpriteFactory.createMissile(this.canvas);
         missile.setInitialPosition(this.x, this.y - this.height / 2);
-        missile.setSize(16, 32);    
+        missile.setSize(16, 32);
         this.missiles.push(missile);
     }
 
@@ -97,7 +102,7 @@ export class Spaceship implements Sprite {
     }
 
     addWeapon(weapon: Sprite) {
-        this.missileImage = weapon.getImage();
+
     }
 
     draw(ctx: CanvasRenderingContext2D) {
