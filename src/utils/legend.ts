@@ -1,11 +1,17 @@
-import { Sprite } from './sprite';
-import { Spaceship } from './spaceship';
+import { Sprite } from '../factory/sprite';
+import { Spaceship } from '../game/sprites/spaceship.sprite';
 
 export class Legend implements Sprite {
     spaceship: Spaceship;
 
     constructor(spaceship: Spaceship) {
         this.spaceship = spaceship;
+    }
+    setSize(width: number, height: number): void {
+        throw new Error('Method not implemented.');
+    }
+    setInitialPosition(x: number, y: number): void {
+        throw new Error('Method not implemented.');
     }
     updatePosition(...args: any[]): void {
         throw new Error('Method not implemented.');

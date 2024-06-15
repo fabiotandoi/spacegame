@@ -1,4 +1,4 @@
-import { Sprite } from './sprite';
+import { Sprite } from '../../factory/sprite';
 
 export class Missile implements Sprite {
     x: number;
@@ -14,6 +14,14 @@ export class Missile implements Sprite {
         this.y = y;
         this.image = image;
         this.canvasHeight = canvasHeight;
+    }
+    setSize(width: number, height: number): void {
+       this.width = width;
+       this.height = height;
+    }
+    setInitialPosition(x: number, y: number): void {
+        this.x = x;
+        this.y = y;
     }
 
     updatePosition() {

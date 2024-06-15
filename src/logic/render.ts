@@ -1,8 +1,8 @@
-import { Spaceship } from './spaceship';
-import { InputHandler } from './input';
-import { Legend } from './legend';
-import { SpriteFactory } from './sprite.factory';
-import { Sprite } from './sprite';
+import { Spaceship } from '../game/sprites/spaceship.sprite';
+import { InputHandler } from '../utils/input';
+import { Legend } from '../utils/legend';
+import { SpriteFactory } from '../factory/sprite.factory';
+import { Sprite } from '../factory/sprite';
 
 export class Render {
     canvas: HTMLCanvasElement = document.getElementById('gameCanvas') as HTMLCanvasElement;
@@ -16,13 +16,13 @@ export class Render {
     maxSpeed: number;
 
     constructor(acceleration: number, friction: number, maxSpeed: number) {
-        this.canvas = this.canvas;
         this.ctx = this.canvas.getContext('2d') as CanvasRenderingContext2D;
-        const spaceshipImage = SpriteFactory.createSpaceshipImage();
-        const missileImage = SpriteFactory.createMissileImage();
-        this.spaceship = new Spaceship(this.canvas.width / 2, this.canvas.height / 2, spaceshipImage, missileImage, this.canvas.width, this.canvas.height);
+        this.spaceship = SpriteFactory.createSpaceShip(this.canvas);
         this.inputHandler = new InputHandler();
         this.legend = new Legend(this.spaceship);
+
+        this.spaceship.setInitialPosition(this.canvas.width / 2, this.canvas.height / 2);
+        this.spaceship.setSize(112,112);
         this.sprites.push(this.spaceship, this.legend);
         this.acceleration = acceleration;
         this.friction = friction;

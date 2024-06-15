@@ -1,9 +1,9 @@
-import { Sprite } from './sprite';
-import { Missile } from './missile';
+import { Sprite } from '../../factory/sprite';
+import { Missile } from './missile.sprite';
 
 export class Spaceship implements Sprite {
-    x: number;
-    y: number;
+    x: number = 0;
+    y: number = 0;
     width: number = 112;
     height: number = 112;
     velocityX: number = 0;
@@ -12,15 +12,23 @@ export class Spaceship implements Sprite {
     canvasWidth: number;
     canvasHeight: number;
     missiles: Missile[] = [];
-    missileImage: HTMLImageElement;
+    //missileImage: HTMLImageElement;
 
-    constructor(x: number, y: number, image: HTMLImageElement, missileImage: HTMLImageElement, canvasWidth: number, canvasHeight: number) {
+
+    constructor(image: HTMLImageElement, canvas: HTMLCanvasElement) {
+        this.image = image;
+        //this.missileImage = missileImage;
+        this.canvasWidth = canvas.width;
+        this.canvasHeight = canvas.height;
+    }
+    setSize(width: number, height: number): void {
+        this.width = width;
+        this.height = height;
+    }
+
+    setInitialPosition(x: number, y: number): void {
         this.x = x;
         this.y = y;
-        this.image = image;
-        this.missileImage = missileImage;
-        this.canvasWidth = canvasWidth;
-        this.canvasHeight = canvasHeight;
     }
 
     updatePosition(acceleration: number, friction: number, maxSpeed: number, keys: { [key: string]: boolean }) {
@@ -52,8 +60,8 @@ export class Spaceship implements Sprite {
     }
 
     shoot() {
-        const missile = new Missile(this.x, this.y - this.height / 2, this.missileImage, this.canvasHeight);
-        this.missiles.push(missile);
+        //const missile = new Missile(this.x, this.y - this.height / 2, this.missileImage, this.canvasHeight);
+        //this.missiles.push(missile);
     }
 
     checkCollisions() {
@@ -78,8 +86,14 @@ export class Spaceship implements Sprite {
         }
     }
 
+    addWeapon(weapon: Sprite) {
+        
+        //this.missileImage = weapon;
+        throw new Error('Method not implemented.');
+    }
+
     draw(ctx: CanvasRenderingContext2D) {
         ctx.drawImage(this.image, this.x - this.width / 2, this.y - this.height / 2, this.width, this.height);
-        this.missiles.forEach(missile => missile.draw(ctx));
+        //this.missiles.forEach(missile => missile.draw(ctx));
     }
 }

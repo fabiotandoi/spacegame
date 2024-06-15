@@ -1,4 +1,4 @@
-import { gameLoop } from './game/game';
+import { gameLoop } from './logic/game';
 gameLoop();
 
 
