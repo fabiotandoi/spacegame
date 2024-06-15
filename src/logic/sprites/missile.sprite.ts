@@ -1,7 +1,9 @@
 import { Sprite } from '../../factory/sprite.interface';
+import { Weapon } from '../../factory/weapon.base';
 import { InputHandler } from '../../utils/input';
+import { Render } from '../../utils/render';
 
-export class Missile implements Sprite {
+export class Missile implements Weapon {
     x: number = 0;
     y: number = 0;
     width: number = 16;
@@ -10,9 +12,9 @@ export class Missile implements Sprite {
     image: HTMLImageElement;
     canvasHeight: number;
 
-    constructor(image: HTMLImageElement, canvas: HTMLCanvasElement) {
+    constructor(image: HTMLImageElement, render: Render) {
         this.image = image;
-        this.canvasHeight = canvas.height;
+        this.canvasHeight = render.getCanvas() .height;
     }
     inputHandler: InputHandler;
     getImage(): HTMLImageElement {

@@ -1,27 +1,34 @@
-import { Missile } from "../game/sprites/missile.sprite";
-import { Spaceship } from "../game/sprites/spaceship.sprite";
+import { Missile } from "../logic/sprites/missile.sprite";
+import { Spaceship } from "../logic/sprites/spaceship.sprite";
+import { Render } from "../utils/render";
+import { AbstractSpriteFactory } from "./sprite.abstract.factory";
+import { Sprite } from "./sprite.interface";
 
-export class SpriteFactory {
-    private image: HTMLImageElement;
+export class SpriteFactory implements AbstractSpriteFactory {
 
+    private render: Render;
 
-    private constructor() {
-        this.image = new Image();
+    private constructor(render: Render) {
+        this.render = render;
     }
 
-    private static setImage(src:string): HTMLImageElement {
+    public static createSpriteFactory(render: Render): SpriteFactory {
+        return new SpriteFactory(render);
+    }
+
+    private static setImage(src: string): HTMLImageElement {
         const image = new Image();
         image.src = src;
         return image;
     }
 
-    public static createSpaceShip(canvas: HTMLCanvasElement) {
+    public createSpaceShip() {
         const spaceshipImage = SpriteFactory.setImage('static/sprites/spaceship.png');
-        return new Spaceship(spaceshipImage, canvas);
+        return new Spaceship(spaceshipImage, this.render);
     }
 
-    public static createMissile(canvas: HTMLCanvasElement) {
+    public createMissile() {
         const missileImage = SpriteFactory.setImage('static/sprites/missile.png');
-        return new Missile(missileImage, canvas);
+        return new Missile(missileImage, this.render);
     }
 }

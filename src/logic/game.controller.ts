@@ -1,9 +1,8 @@
-import { Spaceship } from '../game/sprites/spaceship.sprite';
+import { Spaceship } from './sprites/spaceship.sprite';
 import { InputHandler } from '../utils/input';
 import { Legend } from '../utils/legend';
 import { SpriteFactory } from '../factory/sprite.factory';
-import { Sprite } from '../factory/sprite.interface';
-import { Drawable } from '../factory/drawable';
+import { Drawable } from '../factory/drawable.interface';
 import { Render } from '../utils/render';
 
 export class GameController {
@@ -12,6 +11,7 @@ export class GameController {
     legend: Legend;
     drawables: Drawable[] = [];
     render: Render = Render.createRender();
+    spriteFactory: SpriteFactory = SpriteFactory.createSpriteFactory(this.render);
 
     constructor() {
         this.inputHandler = new InputHandler();
@@ -22,7 +22,7 @@ export class GameController {
 
         const canvas = this.render.getCanvas();
 
-        this.spaceship = SpriteFactory.createSpaceShip(canvas);
+        this.spaceship = this.spriteFactory.createSpaceShip();
 
         this.legend = new Legend(this.spaceship);
 
@@ -38,7 +38,7 @@ export class GameController {
         this.spaceship.updatePosition();
 
         if (this.inputHandler.keys['x']) {
-            const missile = SpriteFactory.createMissile(this.render.getCanvas());
+            const missile = this.spriteFactory.createMissile();
             this.spaceship.shoot(missile);
             this.inputHandler.keys['x'] = false; // Prevenire il continuo sparo
         }

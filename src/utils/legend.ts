@@ -1,4 +1,4 @@
-import { Spaceship } from '../game/sprites/spaceship.sprite';
+import { Spaceship } from '../logic/sprites/spaceship.sprite';
 
 export class Legend {
     spaceship: Spaceship;

@@ -1,9 +1,9 @@
-import { SpriteFactory } from '../../factory/sprite.factory';
-import { Sprite } from '../../factory/sprite.interface';
+import { Shooter } from '../../factory/shooter.interface';
+import { Weapon } from '../../factory/weapon.base';
 import { InputHandler } from '../../utils/input';
-import { Missile } from './missile.sprite';
+import { Render } from '../../utils/render';
 
-export class Spaceship implements Sprite {
+export class Spaceship implements Shooter {
     x: number = 0;
     y: number = 0;
     width: number = 112;
@@ -17,16 +17,19 @@ export class Spaceship implements Sprite {
     canvasWidth: number;
     canvasHeight: number;
     canvas: HTMLCanvasElement;
-    missiles: Missile[] = [];
-    missileImage: HTMLImageElement;
+    weapons: Weapon[] = [];
     inputHandler: InputHandler = new InputHandler();
+    private render: Render;
 
-    constructor(image: HTMLImageElement, canvas: HTMLCanvasElement) {
+    constructor(image: HTMLImageElement, render: Render) {
         this.image = image;
-        //this.missileImage = missileImage;
-        this.canvasWidth = canvas.width;
-        this.canvasHeight = canvas.height;
-        this.canvas = canvas;
+        this.canvasWidth = render.getCanvas().width;
+        this.canvasHeight = render.getCanvas().height;
+        this.canvas = render.getCanvas();
+        this.render = render;
+    }
+    isOffScreen(): boolean {
+        throw new Error('Method not implemented.');
     }
     getImage(): HTMLImageElement {
         throw new Error('Method not implemented.');
@@ -63,20 +66,18 @@ export class Spaceship implements Sprite {
         this.y += this.velocityY;
 
         this.checkCollisions();
-        this.updateMissiles();
+        this.updateWeapons();        
     }
 
-    updateMissiles() {
-        this.missiles.forEach(missile => missile.updatePosition());
-        this.missiles = this.missiles.filter(missile => !missile.isOffScreen());
+    updateWeapons() {
+        this.weapons.forEach(weapon => weapon.updatePosition());
+        this.weapons = this.weapons.filter(weapon => !weapon.isOffScreen());
     }
 
-    shoot(weapon: Missile) {
-        this.missileImage = weapon.getImage();
-        const missile = SpriteFactory.createMissile(this.canvas);
-        missile.setInitialPosition(this.x, this.y - this.height / 2);
-        missile.setSize(16, 32);
-        this.missiles.push(missile);
+    shoot(weapon: Weapon) {
+        weapon.setInitialPosition(this.x, this.y - this.height / 2);
+        weapon.setSize(16, 32);
+        this.weapons.push(weapon);
     }
 
     checkCollisions() {
@@ -101,12 +102,8 @@ export class Spaceship implements Sprite {
         }
     }
 
-    addWeapon(weapon: Sprite) {
-
-    }
-
     draw(ctx: CanvasRenderingContext2D) {
         ctx.drawImage(this.image, this.x - this.width / 2, this.y - this.height / 2, this.width, this.height);
-        this.missiles.forEach(missile => missile.draw(ctx));
+        this.weapons.forEach(missile => missile.draw(ctx));
     }
 }
