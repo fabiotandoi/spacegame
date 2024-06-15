@@ -3,4 +3,5 @@ export interface Sprite {
     updatePosition(...args: any[]): void;
     setInitialPosition(x: number, y: number): void;
     setSize(width: number, height: number): void;
+    getImage(): HTMLImageElement;
 }

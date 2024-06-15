@@ -2,7 +2,7 @@ import { Spaceship } from '../game/sprites/spaceship.sprite';
 import { InputHandler } from '../utils/input';
 import { Legend } from '../utils/legend';
 import { SpriteFactory } from '../factory/sprite.factory';
-import { Sprite } from '../factory/sprite';
+import { Sprite } from '../factory/sprite.interface';
 
 export class Render {
     canvas: HTMLCanvasElement = document.getElementById('gameCanvas') as HTMLCanvasElement;
@@ -23,7 +23,13 @@ export class Render {
 
         this.spaceship.setInitialPosition(this.canvas.width / 2, this.canvas.height / 2);
         this.spaceship.setSize(112,112);
-        this.sprites.push(this.spaceship, this.legend);
+
+        let missile = SpriteFactory.createMissile(this.canvas);
+
+        this.spaceship.addWeapon(missile);
+
+        this.sprites.push(this.spaceship);
+        
         this.acceleration = acceleration;
         this.friction = friction;
         this.maxSpeed = maxSpeed;
@@ -40,6 +46,7 @@ export class Render {
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.legend.draw(this.ctx);
         this.sprites.forEach(sprite => sprite.draw(this.ctx));
     }
 

@@ -1,7 +1,6 @@
-import { Sprite } from '../factory/sprite';
 import { Spaceship } from '../game/sprites/spaceship.sprite';
 
-export class Legend implements Sprite {
+export class Legend {
     spaceship: Spaceship;
 
     constructor(spaceship: Spaceship) {

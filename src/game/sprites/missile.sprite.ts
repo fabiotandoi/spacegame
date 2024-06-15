@@ -1,23 +1,24 @@
-import { Sprite } from '../../factory/sprite';
+import { Sprite } from '../../factory/sprite.interface';
 
 export class Missile implements Sprite {
-    x: number;
-    y: number;
+    x: number = 0;
+    y: number = 0;
     width: number = 16;
     height: number = 32;
     velocityY: number = -5;
     image: HTMLImageElement;
     canvasHeight: number;
 
-    constructor(x: number, y: number, image: HTMLImageElement, canvasHeight: number) {
-        this.x = x;
-        this.y = y;
+    constructor(image: HTMLImageElement, canvas: HTMLCanvasElement) {
         this.image = image;
-        this.canvasHeight = canvasHeight;
+        this.canvasHeight = canvas.height;
+    }
+    getImage(): HTMLImageElement {
+        return this.image;
     }
     setSize(width: number, height: number): void {
-       this.width = width;
-       this.height = height;
+        this.width = width;
+        this.height = height;
     }
     setInitialPosition(x: number, y: number): void {
         this.x = x;

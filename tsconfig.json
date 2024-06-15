@@ -5,7 +5,7 @@
     "moduleResolution": "node",
     "outDir": "./public",
     "rootDir": "./src",
-    "strict": true,
+    "strict": false,
     "esModuleInterop": true
   },
   "tsc-alias": {

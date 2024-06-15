@@ -1,4 +1,4 @@
-import { Sprite } from '../../factory/sprite';
+import { Sprite } from '../../factory/sprite.interface';
 import { Missile } from './missile.sprite';
 
 export class Spaceship implements Sprite {
@@ -8,11 +8,15 @@ export class Spaceship implements Sprite {
     height: number = 112;
     velocityX: number = 0;
     velocityY: number = 0;
+    acceleration: number = 0.2;
+    friction: number = 0.98;
+    maxSpeed: number = 8;
     image: HTMLImageElement;
     canvasWidth: number;
     canvasHeight: number;
+    canvas: HTMLCanvasElement;
     missiles: Missile[] = [];
-    //missileImage: HTMLImageElement;
+    missileImage: HTMLImageElement;
 
 
     constructor(image: HTMLImageElement, canvas: HTMLCanvasElement) {
@@ -20,6 +24,10 @@ export class Spaceship implements Sprite {
         //this.missileImage = missileImage;
         this.canvasWidth = canvas.width;
         this.canvasHeight = canvas.height;
+        this.canvas = canvas;
+    }
+    getImage(): HTMLImageElement {
+        throw new Error('Method not implemented.');
     }
     setSize(width: number, height: number): void {
         this.width = width;
@@ -60,8 +68,10 @@ export class Spaceship implements Sprite {
     }
 
     shoot() {
-        //const missile = new Missile(this.x, this.y - this.height / 2, this.missileImage, this.canvasHeight);
-        //this.missiles.push(missile);
+        const missile = new Missile( this.missileImage, this.canvas);
+        missile.setInitialPosition(this.x, this.y - this.height / 2);
+        missile.setSize(16, 32);    
+        this.missiles.push(missile);
     }
 
     checkCollisions() {
@@ -87,13 +97,11 @@ export class Spaceship implements Sprite {
     }
 
     addWeapon(weapon: Sprite) {
-        
-        //this.missileImage = weapon;
-        throw new Error('Method not implemented.');
+        this.missileImage = weapon.getImage();
     }
 
     draw(ctx: CanvasRenderingContext2D) {
         ctx.drawImage(this.image, this.x - this.width / 2, this.y - this.height / 2, this.width, this.height);
-        //this.missiles.forEach(missile => missile.draw(ctx));
+        this.missiles.forEach(missile => missile.draw(ctx));
     }
 }
