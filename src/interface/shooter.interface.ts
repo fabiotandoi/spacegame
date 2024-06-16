@@ -1,3 +1,4 @@
+import { Drawable } from "./drawable.interface";
 import { Sprite } from "./sprite.interface";
 import { Weapon } from "./weapon.interface";
 
@@ -7,7 +8,7 @@ import { Weapon } from "./weapon.interface";
  * A shooter has methods to shoot a weapon and update its weapons.
  *
  */
-export interface Shooter extends Sprite {
+export interface Shooter extends Drawable {
     /**
      * Shoots a weapon.
      * @param weapon - The weapon to be fired.

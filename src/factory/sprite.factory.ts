@@ -2,7 +2,6 @@ import { Missile } from "../logic/elements/missile.element";
 import { Spaceship } from "../logic/elements/spaceship.element";
 import { Render } from "../utils/render";
 import { AbstractSpriteFactory } from "./sprite.abstract.factory";
-import { Sprite } from "../interface/sprite.interface";
 
 export class SpriteFactory implements AbstractSpriteFactory {
 

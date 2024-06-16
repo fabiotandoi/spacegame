@@ -1,47 +1,56 @@
 import { InputHandler } from "../utils/input";
+import { Render } from "../utils/render";
 import { Drawable } from "./drawable.interface";
+import { Position } from "./position.interface";
+import { Size } from "./size.interface";
 
-/**
- * This interface represents a sprite, which is a drawable object that can be moved on the screen.
- * A sprite has an input handler, which allows it to react to user input.
- * It also has methods to set its initial position, size, and get its image.
- * Additionally, it provides methods to update its position and check if it is off screen.
- */
-export interface Sprite extends Drawable {
-    /**
-     * The input handler associated with this sprite.
-     */
-    inputHandler: InputHandler;
+export class Sprite implements Drawable {
+    inputHandler: InputHandler = new InputHandler();
+    protected posX: number = 0;
+    protected posY: number = 0;
+    protected width: number = 0;
+    protected height: number = 0;
+    protected image: HTMLImageElement;
+    protected render: Render;
 
-    /**
-     * Updates the position of the sprite based on the provided arguments.
-     * @param args - The arguments to update the sprite's position.
-     */
-    updatePosition(...args: any[]): void;
+    constructor(image: HTMLImageElement, render:Render) {
+        this.render = render;
+        this.image = image;
+    }
 
-    /**
-     * Sets the initial position of the sprite.
-     * @param x - The x-coordinate of the sprite's initial position.
-     * @param y - The y-coordinate of the sprite's initial position.
-     */
-    setInitialPosition(x: number, y: number): void;
+    updatePosition(...args: any[]): void {
+        // Implement the logic to update the position based on the provided arguments
+        throw new Error('Method not implemented.');
+    }
 
-    /**
-     * Sets the size of the sprite.
-     * @param width - The width of the sprite.
-     * @param height - The height of the sprite.
-     */
-    setSize(width: number, height: number): void;
+    setInitialPosition(x: number, y: number): void {
+        this.posX = x;
+        this.posY = y;
+    }
 
-    /**
-     * Gets the image of the sprite.
-     * @returns The HTMLImageElement representing the sprite's image.
-     */
-    getImage(): HTMLImageElement;
+    setSize(width: number, height: number): void {
+        this.width = width;
+        this.height = height;
+    }
 
-    /**
-     * Checks if the sprite is off screen.
-     * @returns True if the sprite is off screen, false otherwise.
-     */
-    isOffScreen(): boolean;
+    getPosition(): Position {
+        return <Position>{ posX: this.posX, posY: this.posY };
+    }
+
+    getSize(): Size {
+        return <Size>{ width: this.width, height: this.height };
+    }
+
+    getImage(): HTMLImageElement {
+        return this.image;
+    }
+
+    isOffScreen(): boolean {
+        // Implement the logic to check if the sprite is off screen
+        throw new Error('Method not implemented.');
+    }
+
+    draw(ctx: CanvasRenderingContext2D): void {
+        ctx.drawImage(this.image, this.posX, this.posY, this.width, this.height);
+    }
 }
