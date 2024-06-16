@@ -1,4 +1,4 @@
-import { Sprite } from "./sprite.interface";
+import { Sprite } from "./sprite.base.element";
 
 /**
  * This interface represents a weapon, which is a sprite that can be fired by a spaceship.

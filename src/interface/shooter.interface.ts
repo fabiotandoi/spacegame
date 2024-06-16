@@ -1,5 +1,5 @@
 import { Drawable } from "./drawable.interface";
-import { Sprite } from "./sprite.interface";
+import { Sprite } from "./sprite.base.element";
 import { Weapon } from "./weapon.interface";
 
 /**

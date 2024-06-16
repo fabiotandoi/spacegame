@@ -26,9 +26,9 @@ export class GameController {
 
         this.legend = new Legend(this.spaceship);
 
-        this.spaceship.setInitialPosition(canvas.width / 2, canvas.height / 2);
+        this.spaceship.setInitialPosition({ posX: canvas.width / 2, posY: canvas.height / 2 });
 
-        this.spaceship.setSize(112, 112);
+        this.spaceship.setSize({ width: 112, height: 112 });
 
         this.drawables.push(this.spaceship, this.legend);
     }

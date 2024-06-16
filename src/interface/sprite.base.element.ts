@@ -13,7 +13,7 @@ export class Sprite implements Drawable {
     protected image: HTMLImageElement;
     protected render: Render;
 
-    constructor(image: HTMLImageElement, render:Render) {
+    constructor(image: HTMLImageElement, render: Render) {
         this.render = render;
         this.image = image;
     }
@@ -23,14 +23,14 @@ export class Sprite implements Drawable {
         throw new Error('Method not implemented.');
     }
 
-    setInitialPosition(x: number, y: number): void {
-        this.posX = x;
-        this.posY = y;
+    setInitialPosition(position: Position): void {
+        this.posX = position.posX;
+        this.posY = position.posY;
     }
 
-    setSize(width: number, height: number): void {
-        this.width = width;
-        this.height = height;
+    setSize(size: Size): void {
+        this.width = size.width;
+        this.height = size.height;
     }
 
     getPosition(): Position {

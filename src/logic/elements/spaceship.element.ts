@@ -1,7 +1,7 @@
 import { Position } from '../../interface/position.interface';
 import { Shooter } from '../../interface/shooter.interface';
 import { Size } from '../../interface/size.interface';
-import { Sprite } from '../../interface/sprite.interface';
+import { Sprite } from '../../interface/sprite.base.element';
 import { Weapon } from '../../interface/weapon.interface';
 import { InputHandler } from '../../utils/input';
 import { Render } from '../../utils/render';
@@ -22,35 +22,6 @@ export class Spaceship extends Sprite implements Shooter {
         super(image, render);
         this.canvasWidth = render.getCanvas().width;
         this.canvasHeight = render.getCanvas().height;
-    }
-    isOffScreen(): boolean {
-        throw new Error('Method not implemented.');
-    }
-    getImage(): HTMLImageElement {
-        throw new Error('Method not implemented.');
-    }
-    setSize(width: number, height: number): void {
-        this.width = width;
-        this.height = height;
-    }
-
-    setInitialPosition(x: number, y: number): void {
-        this.posX = x;
-        this.posY = y;
-    }
-
-    getSize(): Size {
-        return <Size>{
-            width: this.width,
-            height: this.height
-        }
-    }
-
-    getPosition(): Position {
-        return <Position>{
-            posX: this.posX,
-            posY: this.posY
-        }
     }
 
     updatePosition() {
@@ -84,8 +55,16 @@ export class Spaceship extends Sprite implements Shooter {
     }
 
     shoot(weapon: Weapon) {
-        weapon.setInitialPosition(this.posX, this.posY - this.height / 2);
-        weapon.setSize(16, 32);
+        const position = <Position>{
+            posX: this.posX,
+            posY: this.posY - this.height / 2
+        };
+        const size = <Size>{
+            width: 16,
+            height: 32
+        };
+        weapon.setInitialPosition(position);
+        weapon.setSize(size);
         this.weapons.push(weapon);
     }
 
@@ -112,7 +91,6 @@ export class Spaceship extends Sprite implements Shooter {
     }
 
     draw(ctx: CanvasRenderingContext2D) {
-
         ctx.drawImage(this.image, this.posX - this.width / 2, this.posY - this.height / 2, this.width, this.height);
         this.weapons.forEach(missile => missile.draw(ctx));
     }
