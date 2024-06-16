@@ -1,4 +1,4 @@
-import { Drawable } from "../factory/drawable.interface";
+import { Drawable } from "../interface/drawable.interface";
 
 export class Render {
     private canvas: HTMLCanvasElement = document.getElementById('gameCanvas') as HTMLCanvasElement;

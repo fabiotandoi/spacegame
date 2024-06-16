@@ -1,8 +1,8 @@
-import { Spaceship } from './sprites/spaceship.sprite';
+import { Spaceship } from './elements/spaceship.element';
 import { InputHandler } from '../utils/input';
 import { Legend } from '../utils/legend';
 import { SpriteFactory } from '../factory/sprite.factory';
-import { Drawable } from '../factory/drawable.interface';
+import { Drawable } from '../interface/drawable.interface';
 import { Render } from '../utils/render';
 
 export class GameController {

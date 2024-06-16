@@ -1,5 +1,5 @@
-import { Sprite } from '../../factory/sprite.interface';
-import { Weapon } from '../../factory/weapon.base';
+import { Sprite } from '../../interface/sprite.interface';
+import { Weapon } from '../../interface/weapon.interface';
 import { InputHandler } from '../../utils/input';
 import { Render } from '../../utils/render';
 

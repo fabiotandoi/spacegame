@@ -1,5 +1,5 @@
-import { Shooter } from '../../factory/shooter.interface';
-import { Weapon } from '../../factory/weapon.base';
+import { Shooter } from '../../interface/shooter.interface';
+import { Weapon } from '../../interface/weapon.interface';
 import { InputHandler } from '../../utils/input';
 import { Render } from '../../utils/render';
 
@@ -19,14 +19,12 @@ export class Spaceship implements Shooter {
     canvas: HTMLCanvasElement;
     weapons: Weapon[] = [];
     inputHandler: InputHandler = new InputHandler();
-    private render: Render;
 
     constructor(image: HTMLImageElement, render: Render) {
         this.image = image;
         this.canvasWidth = render.getCanvas().width;
         this.canvasHeight = render.getCanvas().height;
         this.canvas = render.getCanvas();
-        this.render = render;
     }
     isOffScreen(): boolean {
         throw new Error('Method not implemented.');

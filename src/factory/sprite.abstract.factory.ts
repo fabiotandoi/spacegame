@@ -1,5 +1,5 @@
 import { Render } from "../utils/render";
-import { Sprite } from "./sprite.interface";
+import { Sprite } from "../interface/sprite.interface";
 
 export interface AbstractSpriteFactory {
     createSpaceShip(render: Render): Sprite;
