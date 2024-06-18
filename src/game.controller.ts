@@ -1,10 +1,10 @@
-import { Spaceship } from './elements/spaceship.element';
-import { InputHandler } from '../utils/input';
-import { Legend } from '../utils/legend';
-import { SpriteFactory } from '../factory/sprite.factory';
-import { Drawable } from '../interface/drawable.interface';
-import { Render } from '../utils/render';
-import { Keys } from '../utils/key.enum';
+import { Spaceship } from './logic/elements/spaceship.element';
+import { InputHandler } from './utils/input';
+import { Legend } from './utils/legend';
+import { SpriteFactory } from './factory/sprite.factory';
+import { Drawable } from './interface/drawable.interface';
+import { Render } from './utils/render';
+import { Keys } from './utils/key.enum';
 
 export class GameController {
     spaceship: Spaceship;

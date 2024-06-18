@@ -1,4 +1,4 @@
-import { GameController } from "./logic/game.controller";
+import { GameController } from "./game.controller";
 
 const game = new GameController();
 

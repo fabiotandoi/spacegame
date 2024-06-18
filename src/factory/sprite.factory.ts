@@ -37,7 +37,6 @@ export class SpriteFactory implements AbstractSpriteFactory {
     private static setImage(src: string): HTMLImageElement {
         const image = new Image();
         image.src = src;
-        console.log('image created', image);
         return image;
     }
 

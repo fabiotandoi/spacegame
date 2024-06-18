@@ -66,7 +66,6 @@ export class Spaceship extends SpriteBase implements Shooter {
         const currentTime = Date.now();
         if ((currentTime - this.lastShootTime) > this.shootCooldown) {
             const weapon = this.spriteFactory.createMissile();
-            console.log(weapon);
             this.shoot(weapon);
             this.lastShootTime = currentTime;
         }

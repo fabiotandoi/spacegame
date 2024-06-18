@@ -2,7 +2,7 @@ import { Keys } from "./key.enum";
 
 
 export class InputHandler {
-  
+
   private static instance: InputHandler;
   keys: Set<Keys>;
 
@@ -36,7 +36,6 @@ export class InputHandler {
   }
 
   logKeys() {
-    console.log('Current keys pressed:', Array.from(this.keys).join(', '));
   }
 
   isKeyPressed(key: Keys): boolean {
