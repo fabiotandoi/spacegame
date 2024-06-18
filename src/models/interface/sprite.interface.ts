@@ -46,6 +46,7 @@ export interface ISprite {
   isOffScreen(): boolean;
   draw(ctx: CanvasRenderingContext2D): void;
 
+  onUpdate(...args: any[]): void;
   updateSprite(...args: any[]): void;
 
   moveUp(acceleration?: number, friction?: number): void;

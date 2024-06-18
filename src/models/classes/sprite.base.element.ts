@@ -25,47 +25,34 @@ export class Sprite implements ISprite {
         this.render = render;
         this.image = image;
     }
-    moveUp(acceleration?: number, friction?: number): void {
+    moveUp(): void {
 
         this.velocityY -= this.acceleration;
         if (this.velocityY < -this.maxSpeed) {
             this.velocityY = -this.maxSpeed;
         }
-        if (this.friction > 0) {
-            this.velocityY *= this.friction;
-        }
     }
 
-    moveDown(acceleration?: number, friction?: number): void {
+    moveDown(): void {
         this.velocityY += this.acceleration;
         if (this.velocityY > this.maxSpeed) {
             this.velocityY = this.maxSpeed;
         }
-        if (this.friction > 0) {
-            this.velocityY *= this.friction;
-        }
     }
 
-    moveLeft(acceleration?: number, friction?: number): void {
+    moveLeft(): void {
         this.velocityX -= this.acceleration;
         if (this.velocityX < -this.maxSpeed) {
             this.velocityX = -this.maxSpeed;
         }
-        if (this.friction > 0) {
-            this.velocityX *= this.friction;
-        }
     }
 
-    moveRight(acceleration?: number, friction?: number): void {
+    moveRight(): void {
         this.velocityX += this.acceleration;
         if (this.velocityX > this.maxSpeed) {
             this.velocityX = this.maxSpeed;
         }
-        if (this.friction > 0) {
-            this.velocityX *= this.friction;
-        }
     }
-
 
     updateSprite(...args: any[]): void {
         // Implement the logic to update the position based on the provided arguments
@@ -99,6 +86,23 @@ export class Sprite implements ISprite {
     isOffScreen(): boolean {
         // Implement the logic to check if the sprite is off screen
         throw new Error('Method not implemented.');
+    }
+
+    applyFriction(): void {
+        // Implement the logic to apply friction to the sprite
+        if (this.friction > 0) {
+            this.velocityX *= this.friction;
+            this.velocityY *= this.friction;
+          }
+    }
+
+    setMaxSpeedLimit(maxSpeed: number): void {
+        const speed = Math.sqrt(this.velocityX ** 2 + this.velocityY ** 2);
+        if (speed > maxSpeed) {
+            const scale = maxSpeed / speed;
+            this.velocityX *= scale;
+            this.velocityY *= scale;
+        }
     }
 
     draw(ctx: CanvasRenderingContext2D): void {
