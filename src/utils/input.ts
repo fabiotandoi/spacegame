@@ -2,6 +2,7 @@ import { Keys } from "./key.enum";
 
 
 export class InputHandler {
+  
   private static instance: InputHandler;
   keys: Set<Keys>;
 

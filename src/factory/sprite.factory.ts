@@ -8,29 +8,36 @@ import { AbstractSpriteFactory } from "./sprite.abstract.factory";
 export class SpriteFactory implements AbstractSpriteFactory {
 
     private render: Render;
+    private static instance: SpriteFactory;
 
-    private constructor(render: Render) {
-        this.render = render;
+    private constructor() {
+        this.render = Render.getInstance();
     }
+
+
 
 
     public createSprite(image: string): SpriteBase {
         const imageFromSrc = SpriteFactory.setImage(image);
         const sprite = new SpriteBase(imageFromSrc, this.render);
-        const size: Size = { width: imageFromSrc.naturalWidth, height: imageFromSrc.naturalHeight }
+        const size: Size = { width: imageFromSrc.naturalWidth, height: imageFromSrc.naturalHeight };
         const canvas = this.render.getCanvas();
         sprite.setSize(size);
-        sprite.setPosition({ posX: canvas.width / 2 - size.width / 2, posY: canvas.height /8 });
+        sprite.setPosition({ posX: canvas.width / 2 - size.width / 2, posY: canvas.height / 8 });
         return sprite;
     }
 
-    public static createSpriteFactory(render: Render): SpriteFactory {
-        return new SpriteFactory(render);
+    public static getInstance(): SpriteFactory {
+        if (!SpriteFactory.instance) {
+            SpriteFactory.instance = new SpriteFactory();
+        }
+        return SpriteFactory.instance;
     }
 
     private static setImage(src: string): HTMLImageElement {
         const image = new Image();
         image.src = src;
+        console.log('image created', image);
         return image;
     }
 

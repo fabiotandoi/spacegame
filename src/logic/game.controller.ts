@@ -10,8 +10,8 @@ export class GameController {
     spaceship: Spaceship;
     legend: Legend;
     drawables: Drawable[] = [];
-    render: Render = Render.createRender();
-    spriteFactory: SpriteFactory = SpriteFactory.createSpriteFactory(this.render);
+    render: Render = Render.getInstance();
+    spriteFactory: SpriteFactory = SpriteFactory.getInstance();
 
     constructor() {
         this.createGame();
@@ -28,6 +28,8 @@ export class GameController {
             if (input.isKeyPressed(Keys.ArrowLeft)) sprite.speedX -= sprite.acceleration;
             if (input.isKeyPressed(Keys.ArrowRight)) sprite.speedX += sprite.acceleration;
 
+            if (input.isKeyPressed(Keys.X)) sprite.loadWeapon('static/sprites/missile.png');
+
             sprite.speedX *= sprite.friction;
             sprite.speedY *= sprite.friction;
 
@@ -41,7 +43,8 @@ export class GameController {
             sprite.setPosition({ posX: sprite.posX + sprite.speedX, posY: sprite.posY + sprite.speedY });
            
         };
-
+ 
+        
         const enemy = this.spriteFactory.createSprite('static/sprites/enemy.png');
 
         this.legend = new Legend(this.spaceship);
@@ -51,9 +54,9 @@ export class GameController {
     }
 
     updateGame() {
-        this.spaceship.updatePosition();
-        const missile = this.spriteFactory.createMissile();
-        this.spaceship.setWeapon(missile);
+        this.spaceship.updateSprite();
+        //const missile = this.spriteFactory.createMissile();
+        //this.spaceship.setWeapon(missile);
     }
 
     gameLoop() {

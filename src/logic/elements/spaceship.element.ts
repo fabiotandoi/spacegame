@@ -1,3 +1,4 @@
+import { SpriteFactory } from '../../factory/sprite.factory';
 import { Position } from '../../interface/position.interface';
 import { Shooter } from '../../interface/shooter.interface';
 import { Size } from '../../interface/size.interface';
@@ -19,6 +20,7 @@ export class Spaceship extends SpriteBase implements Shooter {
     weapons: Weapon[] = [];
     lastShootTime = 0;
     shootCooldown = 800; // Cooldown di 500ms
+    spriteFactory = SpriteFactory.getInstance();
 
     constructor(image: HTMLImageElement, render: Render) {
         super(image, render);
@@ -26,7 +28,7 @@ export class Spaceship extends SpriteBase implements Shooter {
         this.canvasHeight = render.getCanvas().height;
     }
 
-    updatePosition() {
+    updateSprite() {
         /*  let keys = this.inputHandler.keys;
  
          if (keys['ArrowUp']) this.speedY -= this.acceleration;
@@ -56,17 +58,19 @@ export class Spaceship extends SpriteBase implements Shooter {
     }
 
     updateWeapons() {
-        this.weapons.forEach(weapon => weapon.updatePosition());
+        this.weapons.forEach(weapon => weapon.updateSprite());
         this.weapons = this.weapons.filter(weapon => !weapon.isOffScreen());
     }
 
-    setWeapon(weapon: Weapon) {
+    loadWeapon(img: string) {
         const currentTime = Date.now();
-        if (this.inputHandler.isKeyPressed(Keys.X) && (currentTime - this.lastShootTime) > this.shootCooldown) {
-          this.shoot(weapon);
-          this.lastShootTime = currentTime;
+        if ((currentTime - this.lastShootTime) > this.shootCooldown) {
+            const weapon = this.spriteFactory.createMissile();
+            console.log(weapon);
+            this.shoot(weapon);
+            this.lastShootTime = currentTime;
         }
-      }
+    }
 
     shoot(weapon: Weapon) {
         const position = <Position>{

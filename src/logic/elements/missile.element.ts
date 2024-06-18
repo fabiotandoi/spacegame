@@ -15,7 +15,7 @@ export class Missile extends SpriteBase implements Weapon {
         this.image = image;
     }
 
-    updatePosition() {
+    updateSprite() {
         this.posY += this.velocityY;
     }
 

@@ -11,14 +11,25 @@ export enum Positions {
 }
 
 export class Render {
-    private canvas: HTMLCanvasElement = document.getElementById('gameCanvas') as HTMLCanvasElement;
+
+    private static instance: Render;
+    private canvas: HTMLCanvasElement;
     private ctx: CanvasRenderingContext2D;
+    
     private constructor() {
+        this.canvas = document.getElementById('gameCanvas') as HTMLCanvasElement;
         this.ctx = this.canvas.getContext('2d') as CanvasRenderingContext2D;
     }
 
     public static createRender() {
         return new Render();
+    }
+
+    public static getInstance(): Render {
+        if (!Render.instance) {
+            Render.instance = new Render();
+        }
+        return Render.instance;
     }
 
     getCanvas() {

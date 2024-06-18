@@ -19,12 +19,11 @@ export class SpriteBase implements Drawable {
         this.image = image;
     }
 
-    updatePosition(...args: any[]): void {
+    updateSprite(...args: any[]): void {
         // Implement the logic to update the position based on the provided arguments
         if (typeof (this.onUpdate) === 'function') {
             this.onUpdate(this, this.inputHandler);
         }
-        throw new Error('Method not implemented.');
     }
 
     setPosition(position: Position): void {
