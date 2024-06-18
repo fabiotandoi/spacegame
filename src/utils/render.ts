@@ -1,4 +1,5 @@
-import { Drawable } from "../interface/drawable.interface";
+import { IDrawable } from "../models/interface/drawable.interface";
+import { IRender } from "../models/interface/render.interface";
 
 export enum Positions {
     TOP_LEFT = 'left',
@@ -10,12 +11,12 @@ export enum Positions {
     BOTTOM = 'bottom'
 }
 
-export class Render {
+export class Render implements IRender {
 
-    private static instance: Render;
+    private static instance: IRender;
     private canvas: HTMLCanvasElement;
     private ctx: CanvasRenderingContext2D;
-    
+
     private constructor() {
         this.canvas = document.getElementById('gameCanvas') as HTMLCanvasElement;
         this.ctx = this.canvas.getContext('2d') as CanvasRenderingContext2D;
@@ -25,7 +26,7 @@ export class Render {
         return new Render();
     }
 
-    public static getInstance(): Render {
+    public static getInstance(): IRender {
         if (!Render.instance) {
             Render.instance = new Render();
         }
@@ -36,7 +37,7 @@ export class Render {
         return this.canvas;
     }
 
-    draw(drawables: Drawable[]) {
+    draw(drawables: IDrawable[]) {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         drawables.forEach(drawable => drawable.draw(this.ctx));
     }

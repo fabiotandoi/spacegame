@@ -1,7 +1,8 @@
+import { IInputHandler } from "../models/interface/inputHandler.interface";
 import { Keys } from "./key.enum";
 
 
-export class InputHandler {
+export class InputHandler implements IInputHandler {
 
   private static instance: InputHandler;
   keys: Set<Keys>;

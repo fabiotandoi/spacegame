@@ -1,28 +1,29 @@
 import { SpriteFactory } from '../../factory/sprite.factory';
-import { Position } from '../../interface/position.interface';
-import { Shooter } from '../../interface/shooter.interface';
-import { Size } from '../../interface/size.interface';
-import { Weapon } from '../../interface/weapon.interface';
-import { SpriteBase } from '../../models/sprite.base.element';
+import { IPosition } from '../../models/interface/position.interface';
+import { IRender } from '../../models/interface/render.interface';
+import { Shooter } from '../../models/interface/shooter.interface';
+import { ISize } from '../../models/interface/size.interface';
+import { IWeapon } from '../../models/interface/weapon.interface';
+import { Sprite } from '../../models/classes/sprite.base.element';
 import { Keys } from '../../utils/key.enum';
 import { Render } from '../../utils/render';
 
 
-export class Spaceship extends SpriteBase implements Shooter {
+export class Spaceship extends Sprite implements Shooter {
 
-    speedX: number = 0;
-    speedY: number = 0;
+    velocityX: number = 0;
+    velocityY: number = 0;
     acceleration: number = 0.2;
     friction: number = 0.98;
     maxSpeed: number = 8;
     canvasWidth: number;
     canvasHeight: number;
-    weapons: Weapon[] = [];
+    weapons: IWeapon[] = [];
     lastShootTime = 0;
     shootCooldown = 800; // Cooldown di 500ms
     spriteFactory = SpriteFactory.getInstance();
 
-    constructor(image: HTMLImageElement, render: Render) {
+    constructor(image: HTMLImageElement, render: IRender) {
         super(image, render);
         this.canvasWidth = this.render.getCanvas().width;
         this.canvasHeight = render.getCanvas().height;
@@ -71,12 +72,12 @@ export class Spaceship extends SpriteBase implements Shooter {
         }
     }
 
-    shoot(weapon: Weapon) {
-        const position = <Position>{
+    shoot(weapon: IWeapon) {
+        const position = <IPosition>{
             posX: this.posX,
             posY: this.posY - this.height / 2
         };
-        const size = <Size>{
+        const size = <ISize>{
             width: 16,
             height: 32
         };
@@ -88,22 +89,22 @@ export class Spaceship extends SpriteBase implements Shooter {
     checkCollisions() {
         if (this.posX - this.width / 2 < 0) {
             this.posX = this.width / 2;
-            this.speedX = -this.speedX;
+            this.velocityX = -this.velocityX;
         }
 
         if (this.posX + this.width / 2 > this.canvasWidth) {
             this.posX = this.canvasWidth - this.width / 2;
-            this.speedX = -this.speedX;
+            this.velocityX = -this.velocityX;
         }
 
         if (this.posY - this.height / 2 < 0) {
             this.posY = this.height / 2;
-            this.speedY = -this.speedY;
+            this.velocityY = -this.velocityY;
         }
 
         if (this.posY + this.height / 2 > this.canvasHeight) {
             this.posY = this.canvasHeight - this.height / 2;
-            this.speedY = -this.speedY;
+            this.velocityY = -this.velocityY;
         }
     }
 

@@ -2,15 +2,16 @@ import { Spaceship } from './logic/elements/spaceship.element';
 import { InputHandler } from './utils/input';
 import { Legend } from './utils/legend';
 import { SpriteFactory } from './factory/sprite.factory';
-import { Drawable } from './interface/drawable.interface';
+import { IDrawable } from './models/interface/drawable.interface';
 import { Render } from './utils/render';
 import { Keys } from './utils/key.enum';
+import { IRender } from './models/interface/render.interface';
 
 export class GameController {
     spaceship: Spaceship;
     legend: Legend;
-    drawables: Drawable[] = [];
-    render: Render = Render.getInstance();
+    drawables: IDrawable[] = [];
+    render: IRender = Render.getInstance();
     spriteFactory: SpriteFactory = SpriteFactory.getInstance();
 
     constructor() {
@@ -23,24 +24,28 @@ export class GameController {
 
         this.spaceship.onUpdate = (sprite: Spaceship, input: InputHandler) => {
 
-            if (input.isKeyPressed(Keys.ArrowUp)) sprite.speedY -= sprite.acceleration;
-            if (input.isKeyPressed(Keys.ArrowDown)) sprite.speedY += sprite.acceleration;
-            if (input.isKeyPressed(Keys.ArrowLeft)) sprite.speedX -= sprite.acceleration;
-            if (input.isKeyPressed(Keys.ArrowRight)) sprite.speedX += sprite.acceleration;
+           /*  if (input.isKeyPressed(Keys.ArrowUp)) sprite.velocityY -= sprite.acceleration;
+            if (input.isKeyPressed(Keys.ArrowDown)) sprite.velocityY += sprite.acceleration;
+            if (input.isKeyPressed(Keys.ArrowLeft)) sprite.velocityX -= sprite.acceleration;
+            if (input.isKeyPressed(Keys.ArrowRight)) sprite.velocityX += sprite.acceleration; */
+            if (input.isKeyPressed(Keys.ArrowUp)) sprite.moveUp();
+            if (input.isKeyPressed(Keys.ArrowDown)) sprite.moveDown();
+            if (input.isKeyPressed(Keys.ArrowLeft)) sprite.moveLeft();
+            if (input.isKeyPressed(Keys.ArrowRight)) sprite.moveRight();
 
             if (input.isKeyPressed(Keys.X)) sprite.loadWeapon('static/sprites/missile.png');
 
-            sprite.speedX *= sprite.friction;
-            sprite.speedY *= sprite.friction;
+            sprite.velocityX *= sprite.friction;
+            sprite.velocityY *= sprite.friction;
 
-            const speed = Math.sqrt(sprite.speedX ** 2 + sprite.speedY ** 2);
+            const speed = Math.sqrt(sprite.velocityX ** 2 + sprite.velocityY ** 2);
             if (speed > sprite.maxSpeed) {
                 const scale = sprite.maxSpeed / speed;
-                sprite.speedX *= scale;
-                sprite.speedY *= scale;
+                sprite.velocityX *= scale;
+                sprite.velocityY *= scale;
             }
 
-            sprite.setPosition({ posX: sprite.posX + sprite.speedX, posY: sprite.posY + sprite.speedY });
+            sprite.setPosition({ posX: sprite.posX + sprite.velocityX, posY: sprite.posY + sprite.velocityY });
            
         };
  

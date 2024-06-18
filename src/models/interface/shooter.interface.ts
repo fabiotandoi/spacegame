@@ -1,6 +1,6 @@
-import { Keys } from "../utils/key.enum";
-import { Drawable } from "./drawable.interface";
-import { Weapon } from "./weapon.interface";
+import { Keys } from "../../utils/key.enum";
+import { IDrawable } from "./drawable.interface";
+import { IWeapon } from "./weapon.interface";
 
 /**
  * This interface represents a shooter, which is a sprite that can fire weapons.
@@ -8,18 +8,18 @@ import { Weapon } from "./weapon.interface";
  * A shooter has methods to shoot a weapon and update its weapons.
  *
  */
-export interface Shooter extends Drawable {
+export interface Shooter extends IDrawable {
 
     /**
      * The weapons of the shooter.
      */
-    weapons: Weapon[];
+    weapons: IWeapon[];
     /**
      * Shoots a weapon.
      * @param weapon - The weapon to be fired.
      * @param key - The key that was pressed.
      */
-    shoot(weapon: Weapon, key: Keys): void;
+    shoot(weapon: IWeapon, key: Keys): void;
 
     /**
      * Updates the weapons of the shooter.

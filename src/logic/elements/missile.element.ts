@@ -1,16 +1,13 @@
-import { Position } from '../../interface/position.interface';
-import { Size } from '../../interface/size.interface';
-import { SpriteBase } from '../../models/sprite.base.element';
-import { Weapon } from '../../interface/weapon.interface';
-import { InputHandler } from '../../utils/input';
-import { Render } from '../../utils/render';
+import { Sprite } from '../../models/classes/sprite.base.element';
+import { IWeapon } from '../../models/interface/weapon.interface';
+import { IRender } from '../../models/interface/render.interface';
 
-export class Missile extends SpriteBase implements Weapon {
+export class Missile extends Sprite implements IWeapon {
 
     velocityY: number = -5;
     image: HTMLImageElement;
 
-    constructor(image: HTMLImageElement, render: Render) {
+    constructor(image: HTMLImageElement, render: IRender) {
         super(image, render);
         this.image = image;
     }

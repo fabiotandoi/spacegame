@@ -1,4 +1,4 @@
-export interface Position {
+export interface IPosition {
     posX: number;
     posY: number;
 }

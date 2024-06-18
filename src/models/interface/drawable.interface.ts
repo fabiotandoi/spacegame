@@ -5,6 +5,6 @@
  * @return {void}
  *
  */
-export interface Drawable {
+export interface IDrawable {
     draw(ctx: CanvasRenderingContext2D): void
 }
