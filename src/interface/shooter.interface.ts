@@ -1,5 +1,5 @@
+import { Keys } from "../utils/key.enum";
 import { Drawable } from "./drawable.interface";
-import { Sprite } from "./sprite.base.element";
 import { Weapon } from "./weapon.interface";
 
 /**
@@ -9,11 +9,17 @@ import { Weapon } from "./weapon.interface";
  *
  */
 export interface Shooter extends Drawable {
+
+    /**
+     * The weapons of the shooter.
+     */
+    weapons: Weapon[];
     /**
      * Shoots a weapon.
      * @param weapon - The weapon to be fired.
+     * @param key - The key that was pressed.
      */
-    shoot(weapon: Weapon): void;
+    shoot(weapon: Weapon, key: Keys): void;
 
     /**
      * Updates the weapons of the shooter.

@@ -1,8 +1,10 @@
 {
   "compilerOptions": {
     "target": "es6",
-    "module": "es6",
+    "module": "esnext",
     "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "outDir": "./public",
     "rootDir": "./src",
     "strict": false,

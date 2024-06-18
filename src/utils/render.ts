@@ -1,5 +1,15 @@
 import { Drawable } from "../interface/drawable.interface";
 
+export enum Positions {
+    TOP_LEFT = 'left',
+    TOP_RIGHT = 'right',
+    CENTER = 'center',
+    LEFT = 'left',
+    RIGHT = 'right',
+    TOP = 'top',
+    BOTTOM = 'bottom'
+}
+
 export class Render {
     private canvas: HTMLCanvasElement = document.getElementById('gameCanvas') as HTMLCanvasElement;
     private ctx: CanvasRenderingContext2D;

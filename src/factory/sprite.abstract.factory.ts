@@ -1,7 +1,7 @@
 import { Render } from "../utils/render";
-import { Sprite } from "../interface/sprite.base.element";
+import { SpriteBase } from "../models/sprite.base.element";
 
 export interface AbstractSpriteFactory {
-    createSpaceShip(render: Render): Sprite;
-    createMissile(render: Render): Sprite;
+    createSpaceShip(render: Render): SpriteBase;
+    createMissile(render: Render): SpriteBase;
 }

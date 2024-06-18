@@ -1,11 +1,11 @@
 import { Position } from '../../interface/position.interface';
 import { Size } from '../../interface/size.interface';
-import { Sprite } from '../../interface/sprite.base.element';
+import { SpriteBase } from '../../models/sprite.base.element';
 import { Weapon } from '../../interface/weapon.interface';
 import { InputHandler } from '../../utils/input';
 import { Render } from '../../utils/render';
 
-export class Missile extends Sprite implements Weapon {
+export class Missile extends SpriteBase implements Weapon {
 
     velocityY: number = -5;
     image: HTMLImageElement;
