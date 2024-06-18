@@ -4,9 +4,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build-live-server": "tsc && tsc-alias && npm run copy-files && live-server",
-    "build": "tsc && tsc-alias && npm run copy-files",
-    "copy-files": "cp index.html public/index.html && cp -r static public",
+    "build-live-server": "tsc && tsc-alias && npm run copy-files-to-public && live-server",
+    "build": "tsc && tsc-alias && npm run copy-files-to-public",
+    "copy-files-to-public": "cp index.html public/index.html && cp -r static public",
     "watch": "nodemon --watch src --ext ts --exec 'npm run build-and-restart'",
     "build-and-restart": "npm run build  && node server/server.js",
     "build-dev": "npm run build && node server/server.js",
