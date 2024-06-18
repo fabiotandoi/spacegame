@@ -87,23 +87,26 @@ export class Spaceship extends Sprite implements Shooter {
     }
 
     checkCollisions() {
-        if (this.posX - this.width / 2 < 0) {
-            this.posX = this.width / 2;
+        const halfWidth = this.width / 2;
+        const halfHeight = this.height / 2;
+
+        if (this.posX - halfWidth < 0) {
+            this.posX = halfWidth;
             this.velocityX = -this.velocityX;
         }
 
-        if (this.posX + this.width / 2 > this.canvasWidth) {
-            this.posX = this.canvasWidth - this.width / 2;
+        if (this.posX + halfWidth > this.canvasWidth) {
+            this.posX = this.canvasWidth - halfWidth;
             this.velocityX = -this.velocityX;
         }
 
-        if (this.posY - this.height / 2 < 0) {
-            this.posY = this.height / 2;
+        if (this.posY - halfHeight < 0) {
+            this.posY = halfHeight;
             this.velocityY = -this.velocityY;
         }
 
-        if (this.posY + this.height / 2 > this.canvasHeight) {
-            this.posY = this.canvasHeight - this.height / 2;
+        if (this.posY + halfHeight > this.canvasHeight) {
+            this.posY = this.canvasHeight - halfHeight;
             this.velocityY = -this.velocityY;
         }
     }

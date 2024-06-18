@@ -1,9 +1,10 @@
 import { Spaceship } from '../logic/elements/spaceship.element';
+import { ISprite } from '../models/interface/sprite.interface';
 
 export class Legend {
-    spaceship: Spaceship;
+    spaceship: ISprite;
 
-    constructor(spaceship: Spaceship) {
+    constructor(spaceship: ISprite) {
         this.spaceship = spaceship;
     }
     setSize(width: number, height: number): void {

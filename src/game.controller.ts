@@ -25,11 +25,7 @@ export class GameController {
         this.spaceship = this.spriteFactory.createSpaceShip();
 
         this.spaceship.onUpdate = (sprite: Spaceship, input: InputHandler) => {
-
-            /*  if (input.isKeyPressed(Keys.ArrowUp)) sprite.velocityY -= sprite.acceleration;
-             if (input.isKeyPressed(Keys.ArrowDown)) sprite.velocityY += sprite.acceleration;
-             if (input.isKeyPressed(Keys.ArrowLeft)) sprite.velocityX -= sprite.acceleration;
-             if (input.isKeyPressed(Keys.ArrowRight)) sprite.velocityX += sprite.acceleration; */
+            
             if (input.isKeyPressed(Keys.ArrowUp)) sprite.moveUp();
             if (input.isKeyPressed(Keys.ArrowDown)) sprite.moveDown();
             if (input.isKeyPressed(Keys.ArrowLeft)) sprite.moveLeft();
@@ -48,19 +44,15 @@ export class GameController {
         this.enemy = this.spriteFactory.createSprite('static/sprites/enemy.png');
 
         this.enemy.onUpdate = (sprite: Spaceship, input: InputHandler) => {
-            if (input.isKeyPressed(Keys.Q)) sprite.moveLeft();
-            const speed = Math.sqrt(sprite.velocityX ** 2 + sprite.velocityY ** 2);
-            sprite.velocityX *= sprite.friction;
-            sprite.velocityY *= sprite.friction;
-            if (speed > sprite.maxSpeed) {
-                const scale = sprite.maxSpeed / speed;
-                sprite.velocityX *= scale;
-                sprite.velocityY *= scale;
-            }
-            sprite.setPosition({ posX: sprite.posX + sprite.velocityX, posY: sprite.posY + sprite.velocityY });
+            if (input.isKeyPressed(Keys.A)) sprite.moveLeft();
+            if (input.isKeyPressed(Keys.D)) sprite.moveRight();
+            if (input.isKeyPressed(Keys.W)) sprite.moveUp();
+            if (input.isKeyPressed(Keys.S)) sprite.moveDown();
+            sprite.applyFriction();
+            sprite.setMaxSpeedLimit(50);
         };
 
-        this.legend = new Legend(this.spaceship);
+        this.legend = new Legend(this.enemy);
 
         this.drawables.push(this.spaceship, this.legend, this.enemy);
 

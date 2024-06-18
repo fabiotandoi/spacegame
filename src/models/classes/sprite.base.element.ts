@@ -17,6 +17,9 @@ export class Sprite implements ISprite {
     acceleration: number = 0.2;
     friction: number = 0.98;
 
+    canvasHeight: number;
+    canvasWidth: number;
+
     image: HTMLImageElement;
     render: IRender;
     onUpdate: (sprite: ISprite, input: IInputHandler) => void;
@@ -24,6 +27,10 @@ export class Sprite implements ISprite {
     constructor(image: HTMLImageElement, render: IRender) {
         this.render = render;
         this.image = image;
+        this.canvasWidth = this.render.getCanvas().width;
+        this.canvasHeight = render.getCanvas().height;
+
+
     }
     moveUp(): void {
 
@@ -58,7 +65,12 @@ export class Sprite implements ISprite {
         // Implement the logic to update the position based on the provided arguments
         if (typeof (this.onUpdate) === 'function') {
             this.onUpdate(this, this.inputHandler);
-        }
+        };
+
+        this.checkCollisions();
+
+
+        this.setPosition({ posX: this.posX + this.velocityX, posY: this.posY + this.velocityY });
     }
 
     setPosition(position: IPosition): void {
@@ -69,6 +81,31 @@ export class Sprite implements ISprite {
     setSize(size: ISize): void {
         this.width = size.width;
         this.height = size.height;
+    }
+
+    checkCollisions() {
+        const halfWidth = this.width / 2;
+        const halfHeight = this.height / 2;
+
+        if (this.posX - halfWidth < 0) {
+            this.posX = halfWidth;
+            this.velocityX = -this.velocityX;
+        }
+
+        if (this.posX + halfWidth > this.canvasWidth) {
+            this.posX = this.canvasWidth - halfWidth;
+            this.velocityX = -this.velocityX;
+        }
+
+        if (this.posY - halfHeight < 0) {
+            this.posY = halfHeight;
+            this.velocityY = -this.velocityY;
+        }
+
+        if (this.posY + halfHeight > this.canvasHeight) {
+            this.posY = this.canvasHeight - halfHeight;
+            this.velocityY = -this.velocityY;
+        }
     }
 
     getPosition(): IPosition {
@@ -93,7 +130,7 @@ export class Sprite implements ISprite {
         if (this.friction > 0) {
             this.velocityX *= this.friction;
             this.velocityY *= this.friction;
-          }
+        }
     }
 
     setMaxSpeedLimit(maxSpeed: number): void {
