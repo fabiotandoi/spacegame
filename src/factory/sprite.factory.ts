@@ -5,17 +5,20 @@ import { Spaceship } from "../logic/elements/spaceship.element";
 import { Sprite } from "../models/classes/sprite.base.element";
 import { Render } from "../utils/render";
 import { AbstractSpriteFactory } from "./sprite.abstract.factory";
+import { SpriteAnimation } from "../models/classes/animation.element";
+import { IDrawable } from "../models/interface/drawable.interface";
 
 export class SpriteFactory implements AbstractSpriteFactory {
 
     private render: IRender;
     private static instance: SpriteFactory;
+    animation: SpriteAnimation;
+    spritesToDraw: IDrawable[] = [];
+
 
     private constructor() {
         this.render = Render.getInstance();
     }
-
-
 
 
     public createSprite(image: string): Sprite {
@@ -54,5 +57,12 @@ export class SpriteFactory implements AbstractSpriteFactory {
     public createMissile() {
         const missileImage = SpriteFactory.setImage('static/sprites/missile.png');
         return new Missile(missileImage, this.render);
+    }
+
+    public createAnimation(loop = false) {
+        const explosionImage = SpriteFactory.setImage('static/sprites/explosion.png');
+        explosionImage.style.color = "green";
+        this.animation = new SpriteAnimation(explosionImage, 80, 80, 5, 50, loop);
+        return this.animation;
     }
 }

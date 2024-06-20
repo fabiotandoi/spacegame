@@ -4,6 +4,8 @@ import { ISize } from "../interface/size.interface";
 import { IInputHandler } from "../interface/inputHandler.interface";
 import { IRender } from "../interface/render.interface";
 import { ISprite } from "../interface/sprite.interface";
+import { SpriteFactory } from "../../factory/sprite.factory";
+import { SpriteAnimation } from "./animation.element";
 
 export class Sprite implements ISprite {
     inputHandler: IInputHandler = InputHandler.getInstance();
@@ -16,6 +18,8 @@ export class Sprite implements ISprite {
     maxSpeed: number = 8;
     acceleration: number = 0.2;
     friction: number = 0.98;
+    spriteFactory = SpriteFactory.getInstance();
+    spriteId = Math.random();
 
     canvasHeight: number;
     canvasWidth: number;
@@ -23,14 +27,13 @@ export class Sprite implements ISprite {
     image: HTMLImageElement;
     render: IRender;
     onUpdate: (sprite: ISprite, input: IInputHandler) => void;
+    animation?: SpriteAnimation;
 
     constructor(image: HTMLImageElement, render: IRender) {
         this.render = render;
         this.image = image;
         this.canvasWidth = this.render.getCanvas().width;
         this.canvasHeight = render.getCanvas().height;
-
-
     }
     moveUp(): void {
 
@@ -144,5 +147,9 @@ export class Sprite implements ISprite {
 
     draw(ctx: CanvasRenderingContext2D): void {
         ctx.drawImage(this.image, this.posX, this.posY, this.width, this.height);
+    }
+    
+    destroy(): void {
+        this.spriteFactory.spritesToDraw = this.spriteFactory.spritesToDraw.filter((sprite) => sprite.spriteId !== this.spriteId);
     }
 }

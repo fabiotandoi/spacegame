@@ -7,6 +7,7 @@ import { Render } from './utils/render';
 import { Keys } from './utils/key.enum';
 import { IRender } from './models/interface/render.interface';
 import { ISprite } from './models/interface/sprite.interface';
+import { SpriteAnimation } from './models/classes/animation.element';
 
 export class GameController {
     spaceship: Spaceship;
@@ -15,6 +16,7 @@ export class GameController {
     drawables: IDrawable[] = [];
     render: IRender = Render.getInstance();
     spriteFactory: SpriteFactory = SpriteFactory.getInstance();
+    explosionAnimation: SpriteAnimation;
 
     constructor() {
         this.createGame();
@@ -25,13 +27,13 @@ export class GameController {
         this.spaceship = this.spriteFactory.createSpaceShip();
 
         this.spaceship.onUpdate = (sprite: Spaceship, input: InputHandler) => {
-            
+
             if (input.isKeyPressed(Keys.ArrowUp)) sprite.moveUp();
             if (input.isKeyPressed(Keys.ArrowDown)) sprite.moveDown();
             if (input.isKeyPressed(Keys.ArrowLeft)) sprite.moveLeft();
             if (input.isKeyPressed(Keys.ArrowRight)) sprite.moveRight();
 
-            if (input.isKeyPressed(Keys.X)) sprite.loadWeapon('static/sprites/missile.png');
+            if (input.isKeyPressed(Keys.X)) sprite.loadWeapon('static/sprites/missile.png', this.enemy);
 
             sprite.applyFriction();
             sprite.setMaxSpeedLimit(30);
@@ -54,18 +56,25 @@ export class GameController {
 
         this.legend = new Legend(this.enemy);
 
+      /*   this.animation = this.spriteFactory.createAnimation();;
+        this.animation.setPosion(100, 100);
+        this.animation.start(); */
+
         this.drawables.push(this.spaceship, this.legend, this.enemy);
+        this.spriteFactory.spritesToDraw.push(this.spaceship, this.legend, this.enemy);
+
 
     }
 
     updateGame() {
         this.spaceship.updateSprite();
         this.enemy.updateSprite();
+        //this.animation.update(4);
     }
 
     gameLoop() {
         this.updateGame();
-        this.render.draw(this.drawables);
+        this.render.draw(this.spriteFactory.spritesToDraw);
         requestAnimationFrame(() => this.gameLoop());
     }
 }

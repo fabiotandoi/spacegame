@@ -37,20 +37,16 @@ export interface ISprite {
 
   getPosition(): IPosition;
   setPosition(position: IPosition): void;
-
   getSize(): ISize;
   setSize(size: ISize): void;
-
-  getImage(): HTMLImageElement;
-
+  getImage(): HTMLImageElement
   isOffScreen(): boolean;
   draw(ctx: CanvasRenderingContext2D): void;
-
   onUpdate(...args: any[]): void;
   updateSprite(...args: any[]): void;
-
   moveUp(acceleration?: number, friction?: number): void;
   moveDown(acceleration?: number, friction?: number): void;
   moveLeft(acceleration?: number, friction?: number): void;
   moveRight(acceleration?: number, friction?: number): void;
+  destroy(): void;
 }
