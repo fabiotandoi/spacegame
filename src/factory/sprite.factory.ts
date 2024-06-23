@@ -60,7 +60,7 @@ export class SpriteFactory implements AbstractSpriteFactory {
     }
 
     public createAnimation(loop = false) {
-        const explosionImage = SpriteFactory.setImage('static/sprites/explosion.png');
+        const explosionImage = SpriteFactory.setImage('static/sprites/explosionblue.png');
         explosionImage.style.color = "green";
         this.animation = new SpriteAnimation(explosionImage, 80, 80, 5, 50, loop);
         return this.animation;

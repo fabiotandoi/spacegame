@@ -61,6 +61,8 @@ export class GameController {
         this.animation.start(); */
 
         this.drawables.push(this.spaceship, this.legend, this.enemy);
+        const newEnemy = Object.assign({}, this.enemy);
+        newEnemy
         this.spriteFactory.spritesToDraw.push(this.spaceship, this.legend, this.enemy);
 
 

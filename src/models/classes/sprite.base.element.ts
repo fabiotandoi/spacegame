@@ -148,8 +148,24 @@ export class Sprite implements ISprite {
     draw(ctx: CanvasRenderingContext2D): void {
         ctx.drawImage(this.image, this.posX, this.posY, this.width, this.height);
     }
-    
+
     destroy(): void {
         this.spriteFactory.spritesToDraw = this.spriteFactory.spritesToDraw.filter((sprite) => sprite.spriteId !== this.spriteId);
+        setTimeout(() => {
+            this.setPosition({ posX: 0, posY: 0 });
+
+            const minX = Math.ceil(0);
+            const maxX = Math.floor(this.canvasWidth - (this.width));
+            const randomX = Math.floor(Math.random() * (maxX - minX + 1) + minX);
+
+            const minY = Math.ceil(0);
+            const maxY = Math.floor(this.canvasHeight/3);
+            
+            const randomY = Math.floor(Math.random() * (maxY - minY + 1) + minY);
+            this.setPosition({ posX: randomX, posY: randomY });
+
+            this.spriteFactory.spritesToDraw.push(this);
+
+        }, 1300);
     }
 }
