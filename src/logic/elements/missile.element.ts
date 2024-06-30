@@ -27,7 +27,7 @@ export class Missile extends Sprite implements IWeapon {
         return this.posY + this.height < 0;
     }
 
-    
+
     hit(target: ISprite) { /* TODO: do something */
         const missileCenter = { x: this.posX + this.width / 2, y: this.posY + this.height / 2 };
         const targetCenter = { x: target.posX + target.width / 2, y: target.posY + target.height / 2 };
@@ -36,11 +36,14 @@ export class Missile extends Sprite implements IWeapon {
         const radiusSquared = radius ** 2;
 
         if (distanceSquared <= radiusSquared && !this.hitted) {
-            //this.animation = this.spriteFactory.createAnimation();
-            target.destroy();
-            this.animation.start(target.posX, target.posY);
-            this.hitted = true;
-            this.posY=-2000;
+            this.spriteFactory.createAnimation().then((anim) => {
+                this.animation = anim;
+                target.destroy();
+                this.animation.start(target.posX, target.posY);
+                this.hitted = true;
+                this.posY = -2000;
+            }
+            );
         }
     }
 

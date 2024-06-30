@@ -21,8 +21,8 @@ export class SpriteFactory implements AbstractSpriteFactory {
     }
 
 
-    public createSprite(image: string): Sprite {
-        const imageFromSrc = SpriteFactory.setImage(image);
+    public async createSprite(image: string): Promise<Sprite> {
+        const imageFromSrc = await this.setImage(image);
         const sprite = new Sprite(imageFromSrc, this.render);
         const size: ISize = { width: imageFromSrc.naturalWidth, height: imageFromSrc.naturalHeight };
         const canvas = this.render.getCanvas();
@@ -38,14 +38,20 @@ export class SpriteFactory implements AbstractSpriteFactory {
         return SpriteFactory.instance;
     }
 
-    private static setImage(src: string): HTMLImageElement {
+    private setImage(src: string): Promise<HTMLImageElement> {
         const image = new Image();
         image.src = src;
-        return image;
+
+        return new Promise((resolve, reject) => {
+            image.onload = () => {
+                resolve(image);
+            }
+        })
+
     }
 
-    public createSpaceShip() {
-        const imageFromSrc = SpriteFactory.setImage('static/sprites/spaceship.png');
+    public async createSpaceShip(): Promise<Spaceship> {
+        const imageFromSrc = await this.setImage('assets/sprites/spaceship.png');
         const canvas = this.render.getCanvas();
         const spaceship = new Spaceship(imageFromSrc, this.render);
         const size: ISize = { width: imageFromSrc.naturalWidth, height: imageFromSrc.naturalHeight }
@@ -54,13 +60,13 @@ export class SpriteFactory implements AbstractSpriteFactory {
         return spaceship;
     }
 
-    public createMissile() {
-        const missileImage = SpriteFactory.setImage('static/sprites/missile.png');
+    public async createMissile(): Promise<Sprite> {
+        const missileImage = await this.setImage('assets/sprites/missile.png');
         return new Missile(missileImage, this.render);
     }
 
-    public createAnimation(loop = false) {
-        const explosionImage = SpriteFactory.setImage('static/sprites/explosionblue.png');
+    public async createAnimation(loop = false): Promise<SpriteAnimation> {
+        const explosionImage = await this.setImage('assets/sprites/explosionblue.png');
         explosionImage.style.color = "green";
         this.animation = new SpriteAnimation(explosionImage, 80, 80, 5, 50, loop);
         return this.animation;

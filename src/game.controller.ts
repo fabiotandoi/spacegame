@@ -22,9 +22,9 @@ export class GameController {
         this.createGame();
     }
 
-    createGame() {
+    async createGame() {
 
-        this.spaceship = this.spriteFactory.createSpaceShip();
+        this.spaceship = await this.spriteFactory.createSpaceShip();
 
         this.spaceship.onUpdate = (sprite: Spaceship, input: InputHandler) => {
 
@@ -33,7 +33,7 @@ export class GameController {
             if (input.isKeyPressed(Keys.ArrowLeft)) sprite.moveLeft();
             if (input.isKeyPressed(Keys.ArrowRight)) sprite.moveRight();
 
-            if (input.isKeyPressed(Keys.X)) sprite.loadWeapon('static/sprites/missile.png', this.enemy);
+            if (input.isKeyPressed(Keys.X)) sprite.loadWeapon('assets/sprites/missile.png', this.enemy);
 
             sprite.applyFriction();
             sprite.setMaxSpeedLimit(30);
@@ -43,7 +43,7 @@ export class GameController {
         };
 
 
-        this.enemy = this.spriteFactory.createSprite('static/sprites/enemy.png');
+        this.enemy = await this.spriteFactory.createSprite('assets/sprites/enemy.png');
 
         this.enemy.onUpdate = (sprite: Spaceship, input: InputHandler) => {
             if (input.isKeyPressed(Keys.A)) sprite.moveLeft();
@@ -56,15 +56,23 @@ export class GameController {
 
         this.legend = new Legend(this.enemy);
 
-      /*   this.animation = this.spriteFactory.createAnimation();;
-        this.animation.setPosion(100, 100);
-        this.animation.start(); */
+        this.explosionAnimation = await this.spriteFactory.createAnimation();;
+        this.explosionAnimation.setPosion(100, 100);
+        this.explosionAnimation.start();
 
         this.drawables.push(this.spaceship, this.legend, this.enemy);
         const newEnemy = Object.assign({}, this.enemy);
-        newEnemy
         this.spriteFactory.spritesToDraw.push(this.spaceship, this.legend, this.enemy);
 
+
+    }
+
+    public static async createGameController(): Promise<GameController> {
+        let gameController = new GameController();
+
+        await gameController.createGame();
+
+        return gameController;
 
     }
 

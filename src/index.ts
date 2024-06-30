@@ -1,6 +1,6 @@
 import { GameController } from "./game.controller";
 
-const game = new GameController();
-
-game.gameLoop();
+GameController.createGameController().then((gameController) => {
+    gameController.gameLoop();
+});
 

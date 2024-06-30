@@ -28,7 +28,7 @@ export class Spaceship extends Sprite implements Shooter {
         super(image, render);
         this.canvasWidth = this.render.getCanvas().width;
         this.canvasHeight = render.getCanvas().height;
-        this.explotionAnimation = this.spriteFactory.createAnimation();
+        this.spriteFactory.createAnimation().then(animation => this.explotionAnimation = animation);
     }
 
     updateSprite() {
@@ -56,7 +56,7 @@ export class Spaceship extends Sprite implements Shooter {
             this.onUpdate(this, this.inputHandler);
         }
 
-        this.explotionAnimation.update(4);
+        if (this.explotionAnimation) this.explotionAnimation.update(4);
         this.checkCollisions();
         this.updateWeapons();
     }
@@ -66,11 +66,11 @@ export class Spaceship extends Sprite implements Shooter {
         this.weapons = this.weapons.filter(weapon => !weapon.isOffScreen());
     }
 
-    loadWeapon(img: string, target:ISprite) {
+    async loadWeapon(img: string, target:ISprite) {
         this.target = target;
         const currentTime = Date.now();
         if ((currentTime - this.lastShootTime) > this.shootCooldown) {
-            const weapon = this.spriteFactory.createMissile();
+            const weapon = await this.spriteFactory.createMissile();
             this.shoot(weapon);
             this.lastShootTime = currentTime;
         }
