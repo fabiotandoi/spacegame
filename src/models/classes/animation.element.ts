@@ -71,7 +71,7 @@ export class SpriteAnimation implements IDrawable {
         this.frameWidth = height;
     }
 
-    setPosion(x: number, y: number): void {
+    setPositioon(x: number, y: number): void {
         this.posX = x;
         this.posY = y;
     }

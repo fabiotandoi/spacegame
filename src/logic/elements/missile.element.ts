@@ -36,14 +36,10 @@ export class Missile extends Sprite implements IWeapon {
         const radiusSquared = radius ** 2;
 
         if (distanceSquared <= radiusSquared && !this.hitted) {
-            this.spriteFactory.createAnimation().then((anim) => {
-                this.animation = anim;
-                target.destroy();
-                this.animation.start(target.posX, target.posY);
-                this.hitted = true;
-                this.posY = -2000;
-            }
-            );
+            target.destroy();
+            this.animation.start(target.posX, target.posY);
+            this.hitted = true;
+            this.posY = -2000;
         }
     }
 

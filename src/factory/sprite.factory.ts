@@ -7,6 +7,7 @@ import { Render } from "../utils/render";
 import { AbstractSpriteFactory } from "./sprite.abstract.factory";
 import { SpriteAnimation } from "../models/classes/animation.element";
 import { IDrawable } from "../models/interface/drawable.interface";
+import { AssetLoader } from "../utils/assetloader.utils";
 
 export class SpriteFactory implements AbstractSpriteFactory {
 
@@ -14,6 +15,7 @@ export class SpriteFactory implements AbstractSpriteFactory {
     private static instance: SpriteFactory;
     animation: SpriteAnimation;
     spritesToDraw: IDrawable[] = [];
+    assetLoader: AssetLoader = AssetLoader.getInstance();
 
 
     private constructor() {
@@ -21,8 +23,8 @@ export class SpriteFactory implements AbstractSpriteFactory {
     }
 
 
-    public async createSprite(image: string): Promise<Sprite> {
-        const imageFromSrc = await this.setImage(image);
+    public createSprite(image: string): Sprite {
+        const imageFromSrc = this.assetLoader.getImage(image);
         const sprite = new Sprite(imageFromSrc, this.render);
         const size: ISize = { width: imageFromSrc.naturalWidth, height: imageFromSrc.naturalHeight };
         const canvas = this.render.getCanvas();
@@ -37,21 +39,10 @@ export class SpriteFactory implements AbstractSpriteFactory {
         }
         return SpriteFactory.instance;
     }
+    
 
-    private setImage(src: string): Promise<HTMLImageElement> {
-        const image = new Image();
-        image.src = src;
-
-        return new Promise((resolve, reject) => {
-            image.onload = () => {
-                resolve(image);
-            }
-        })
-
-    }
-
-    public async createSpaceShip(): Promise<Spaceship> {
-        const imageFromSrc = await this.setImage('assets/sprites/spaceship.png');
+    public createSpaceShip(): Spaceship {
+        const imageFromSrc = this.assetLoader.getImage('assets/sprites/spaceship.png');
         const canvas = this.render.getCanvas();
         const spaceship = new Spaceship(imageFromSrc, this.render);
         const size: ISize = { width: imageFromSrc.naturalWidth, height: imageFromSrc.naturalHeight }
@@ -60,13 +51,13 @@ export class SpriteFactory implements AbstractSpriteFactory {
         return spaceship;
     }
 
-    public async createMissile(): Promise<Sprite> {
-        const missileImage = await this.setImage('assets/sprites/missile.png');
+    public createMissile(): Sprite {
+        const missileImage = this.assetLoader.getImage('assets/sprites/missile.png');
         return new Missile(missileImage, this.render);
     }
 
-    public async createAnimation(loop = false): Promise<SpriteAnimation> {
-        const explosionImage = await this.setImage('assets/sprites/explosionblue.png');
+    public createAnimation(loop = false): SpriteAnimation {
+        const explosionImage = this.assetLoader.getImage('assets/sprites/explosionblue.png');
         explosionImage.style.color = "green";
         this.animation = new SpriteAnimation(explosionImage, 80, 80, 5, 50, loop);
         return this.animation;

@@ -1,4 +1,4 @@
-import { InputHandler } from "../../utils/input";
+import { InputHandler } from "../../utils/inputhandler.utils";
 import { IPosition } from "../interface/position.interface";
 import { ISize } from "../interface/size.interface";
 import { IInputHandler } from "../interface/inputHandler.interface";
