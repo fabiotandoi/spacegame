@@ -5,7 +5,8 @@ import { IInputHandler } from "../interface/inputHandler.interface";
 import { IRender } from "../interface/render.interface";
 import { ISprite } from "../interface/sprite.interface";
 import { SpriteFactory } from "../../factory/sprite.factory";
-import { SpriteAnimation } from "./animation.element";
+import { SpriteAnimation } from "./animation.controller";
+import { PhisicController } from "./phisic.controller";
 
 export class Sprite implements ISprite {
     inputHandler: IInputHandler = InputHandler.getInstance();
@@ -28,6 +29,7 @@ export class Sprite implements ISprite {
     render: IRender;
     onUpdate: (sprite: ISprite, input: IInputHandler) => void;
     animation?: SpriteAnimation;
+    phisic: PhisicController = new PhisicController(this);
 
     constructor(image: HTMLImageElement, render: IRender) {
         this.render = render;
@@ -159,8 +161,8 @@ export class Sprite implements ISprite {
             const randomX = Math.floor(Math.random() * (maxX - minX + 1) + minX);
 
             const minY = Math.ceil(0);
-            const maxY = Math.floor(this.canvasHeight/3);
-            
+            const maxY = Math.floor(this.canvasHeight / 3);
+
             const randomY = Math.floor(Math.random() * (maxY - minY + 1) + minY);
             this.setPosition({ posX: randomX, posY: randomY });
 

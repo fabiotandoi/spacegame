@@ -2,11 +2,13 @@ import { IInputHandler } from "../interface/inputHandler.interface";
 import { IRender } from "../interface/render.interface";
 import { IPosition } from "../interface/position.interface";
 import { ISize } from "../interface/size.interface";
+import { PhisicController } from "../classes/phisic.controller";
 
 export interface ISprite {
   inputHandler: IInputHandler;
   image: HTMLImageElement;
   render: IRender;
+  phisic: PhisicController;
 
   get posX(): number;
   set posX(value: number);

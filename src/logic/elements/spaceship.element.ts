@@ -6,7 +6,7 @@ import { ISize } from '../../models/interface/size.interface';
 import { IWeapon } from '../../models/interface/weapon.interface';
 import { Sprite } from '../../models/classes/sprite.base.element';
 import { ISprite } from '../../models/interface/sprite.interface';
-import { SpriteAnimation } from '../../models/classes/animation.element';
+import { SpriteAnimation } from '../../models/classes/animation.controller';
 
 
 export class Spaceship extends Sprite implements Shooter {

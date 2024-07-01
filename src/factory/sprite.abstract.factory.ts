@@ -1,4 +1,4 @@
-import { SpriteAnimation } from "../models/classes/animation.element";
+import { SpriteAnimation } from "../models/classes/animation.controller";
 import { Sprite } from "../models/classes/sprite.base.element";
 import { IRender } from "../models/interface/render.interface";
 

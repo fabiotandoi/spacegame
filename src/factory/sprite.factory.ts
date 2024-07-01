@@ -5,7 +5,7 @@ import { Spaceship } from "../logic/elements/spaceship.element";
 import { Sprite } from "../models/classes/sprite.base.element";
 import { Render } from "../utils/render";
 import { AbstractSpriteFactory } from "./sprite.abstract.factory";
-import { SpriteAnimation } from "../models/classes/animation.element";
+import { SpriteAnimation } from "../models/classes/animation.controller";
 import { IDrawable } from "../models/interface/drawable.interface";
 import { AssetLoader } from "../utils/assetloader.utils";
 
