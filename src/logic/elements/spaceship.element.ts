@@ -66,11 +66,10 @@ export class Spaceship extends Sprite implements Shooter {
         this.weapons = this.weapons.filter(weapon => !weapon.isOffScreen());
     }
 
-    async loadWeapon(img: string, target: ISprite) {
+    async loadWeapon(weapon: IWeapon, target: ISprite) {
         this.target = target;
         const currentTime = Date.now();
         if ((currentTime - this.lastShootTime) > this.shootCooldown) {
-            const weapon = this.spriteFactory.createMissile();
             this.shoot(weapon);
             this.lastShootTime = currentTime;
         }

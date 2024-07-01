@@ -9,15 +9,21 @@ export class GameControllerBase {
     assetLoader: IAssetLoader = AssetLoader.getInstance();
 
     constructor() {
-
+        this.run();
     }
 
-    protected async preload(): Promise<void> {
+    protected preload(): any {
+    }
+
+    private async run() {
+        this.preload();
+        await this.assetLoader.loadPromisesAssets();
+        this.load(4);
+        this.gameLoop();
     }
 
     protected load(delta: number): void {
     }
-
 
     public update(): void {
     }
@@ -28,5 +34,5 @@ export class GameControllerBase {
         requestAnimationFrame(() => this.gameLoop());
     }
 
-  
+
 }
