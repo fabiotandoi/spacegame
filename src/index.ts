@@ -5,16 +5,17 @@ import { SpriteFactory } from './factory/sprite.factory';
 import { IDrawable } from './models/interface/drawable.interface';
 import { Keys } from './utils/key.enum';
 import { ISprite } from './models/interface/sprite.interface';
-import { SpriteAnimation } from './models/classes/animation.element';
+import { SpriteAnimation } from './models/classes/animation.controller';
 import { SPG } from './core/spacegame';
+import { IWeapon } from './models/interface/weapon.interface';
 
 export class MyGame extends SPG.GameController {
     spaceship: Spaceship;
     enemy: ISprite;
     legend: Legend;
-    drawables: IDrawable[] = [];
     spriteFactory: SpriteFactory = SpriteFactory.getInstance();
     explosionAnimation: SpriteAnimation;
+    weapon: IWeapon;
 
     constructor() {
         super();
@@ -29,40 +30,44 @@ export class MyGame extends SPG.GameController {
     load() {
 
         this.spaceship = this.spriteFactory.createSpaceShip();
+        this.enemy = this.spriteFactory.createSprite('assets/sprites/enemy.png');
+        this.weapon = this.spriteFactory.createMissile();
 
-        this.spaceship.onUpdate = (sprite: Spaceship, input: InputHandler) => {
+        this.spaceship.loadWeapon(this.weapon, this.enemy);
 
-            if (input.isKeyPressed(Keys.ArrowUp)) sprite.moveUp();
-            if (input.isKeyPressed(Keys.ArrowDown)) sprite.moveDown();
-            if (input.isKeyPressed(Keys.ArrowLeft)) sprite.moveLeft();
-            if (input.isKeyPressed(Keys.ArrowRight)) sprite.moveRight();
+        this.spaceship.onUpdate = (sprite: Spaceship) => {
 
-            const weapon = this.spriteFactory.createMissile();
+            sprite.phisic.moveUp(Keys.ArrowUp);
+            sprite.phisic.moveDown(Keys.ArrowDown);
+            sprite.phisic.moveLeft(Keys.ArrowLeft);
+            sprite.phisic.moveRight(Keys.ArrowRight);
+            sprite.shoot(Keys.X);
 
-            if (input.isKeyPressed(Keys.X)) sprite.loadWeapon(weapon, this.enemy);
+            //const weapon = this.spriteFactory.createMissile();
 
-            sprite.applyFriction();
-            sprite.setMaxSpeedLimit(30);
+            //if (input.isKeyPressed(Keys.X)) sprite.loadWeapon(weapon, this.enemy);
 
-            sprite.setPosition({ posX: sprite.posX + sprite.velocityX, posY: sprite.posY + sprite.velocityY });
+            sprite.phisic.applyFriction();
+            sprite.phisic.setMaxSpeedLimit(30);
+
+            sprite.phisic.setPosition({ posX: sprite.posX + sprite.velocityX, posY: sprite.posY + sprite.velocityY });
 
         };
 
         this.enemy = this.spriteFactory.createSprite(`${SPG.spriteRoot}/enemy.png`);
 
-        this.enemy.onUpdate = (sprite: Spaceship, input: InputHandler) => {
-            if (input.isKeyPressed(Keys.A)) sprite.moveLeft();
-            if (input.isKeyPressed(Keys.D)) sprite.moveRight();
-            if (input.isKeyPressed(Keys.W)) sprite.moveUp();
-            if (input.isKeyPressed(Keys.S)) sprite.moveDown();
-            sprite.applyFriction();
-            sprite.setMaxSpeedLimit(50);
+
+        this.enemy.onUpdate = (sprite: ISprite) => {
+            sprite.phisic.moveLeft(Keys.A);
+            sprite.phisic.moveRight(Keys.D);
+            sprite.phisic.moveUp(Keys.W);
+            sprite.phisic.moveDown(Keys.S);
+            sprite.phisic.applyFriction();
+            sprite.phisic.setMaxSpeedLimit(50);
         };
 
         this.legend = new Legend(this.enemy);
-
-        this.drawables.push(this.spaceship, this.legend, this.enemy);
-        this.spriteFactory.spritesToDraw.push(this.spaceship, this.legend, this.enemy);
+        this.spriteFactory.spritesToDraw.push(this.legend);
 
     }
 

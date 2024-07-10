@@ -1,4 +1,4 @@
-import { GameControllerBase } from '../models/classes/gamecontroller.base.element';
+import { GameControllerBase } from '../models/classes/game.controller';
 import { AssetLoader } from '../utils/assetloader.utils';
 
 type GameControllerConstructor = new () => GameControllerBase;

@@ -5,7 +5,8 @@ import { IInputHandler } from "../interface/inputHandler.interface";
 import { IRender } from "../interface/render.interface";
 import { ISprite } from "../interface/sprite.interface";
 import { SpriteFactory } from "../../factory/sprite.factory";
-import { SpriteAnimation } from "./animation.element";
+import { SpriteAnimation } from "./animation.controller";
+import { PhisicController } from "./phisic.controller";
 
 export class Sprite implements ISprite {
     inputHandler: IInputHandler = InputHandler.getInstance();
@@ -20,6 +21,7 @@ export class Sprite implements ISprite {
     friction: number = 0.98;
     spriteFactory = SpriteFactory.getInstance();
     spriteId = Math.random();
+    destroyed: boolean = false;
 
     canvasHeight: number;
     canvasWidth: number;
@@ -28,40 +30,13 @@ export class Sprite implements ISprite {
     render: IRender;
     onUpdate: (sprite: ISprite, input: IInputHandler) => void;
     animation?: SpriteAnimation;
+    phisic: PhisicController = new PhisicController(this);
 
     constructor(image: HTMLImageElement, render: IRender) {
         this.render = render;
         this.image = image;
         this.canvasWidth = this.render.getCanvas().width;
         this.canvasHeight = render.getCanvas().height;
-    }
-    moveUp(): void {
-
-        this.velocityY -= this.acceleration;
-        if (this.velocityY < -this.maxSpeed) {
-            this.velocityY = -this.maxSpeed;
-        }
-    }
-
-    moveDown(): void {
-        this.velocityY += this.acceleration;
-        if (this.velocityY > this.maxSpeed) {
-            this.velocityY = this.maxSpeed;
-        }
-    }
-
-    moveLeft(): void {
-        this.velocityX -= this.acceleration;
-        if (this.velocityX < -this.maxSpeed) {
-            this.velocityX = -this.maxSpeed;
-        }
-    }
-
-    moveRight(): void {
-        this.velocityX += this.acceleration;
-        if (this.velocityX > this.maxSpeed) {
-            this.velocityX = this.maxSpeed;
-        }
     }
 
     updateSprite(...args: any[]): void {
@@ -73,13 +48,9 @@ export class Sprite implements ISprite {
         this.checkCollisions();
 
 
-        this.setPosition({ posX: this.posX + this.velocityX, posY: this.posY + this.velocityY });
+        this.phisic.setPosition({ posX: this.posX + this.velocityX, posY: this.posY + this.velocityY });
     }
 
-    setPosition(position: IPosition): void {
-        this.posX = position.posX;
-        this.posY = position.posY;
-    }
 
     setSize(size: ISize): void {
         this.width = size.width;
@@ -149,23 +120,30 @@ export class Sprite implements ISprite {
         ctx.drawImage(this.image, this.posX, this.posY, this.width, this.height);
     }
 
+    clear(ctx: CanvasRenderingContext2D): void {
+        ctx.clearRect(this.posX, this.posY, this.width, this.height);
+    }
+
     destroy(): void {
         this.spriteFactory.spritesToDraw = this.spriteFactory.spritesToDraw.filter((sprite) => sprite.spriteId !== this.spriteId);
+        this.destroyed = true;
         setTimeout(() => {
-            this.setPosition({ posX: 0, posY: 0 });
+            this.phisic.setPosition({ posX: 0, posY: 0 });
 
             const minX = Math.ceil(0);
             const maxX = Math.floor(this.canvasWidth - (this.width));
             const randomX = Math.floor(Math.random() * (maxX - minX + 1) + minX);
 
             const minY = Math.ceil(0);
-            const maxY = Math.floor(this.canvasHeight/3);
-            
+            const maxY = Math.floor(this.canvasHeight / 3);
+
             const randomY = Math.floor(Math.random() * (maxY - minY + 1) + minY);
-            this.setPosition({ posX: randomX, posY: randomY });
+            this.phisic.setPosition({ posX: randomX, posY: randomY });
+
+            this.destroyed = false;
 
             this.spriteFactory.spritesToDraw.push(this);
 
-        }, 1300);
+        }, 1000);
     }
 }
