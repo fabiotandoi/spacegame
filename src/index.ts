@@ -30,7 +30,7 @@ export class MyGame extends SPG.GameController {
     load() {
 
         this.spaceship = this.spriteFactory.createSpaceShip();
-        this.enemy = this.spriteFactory.createSprite('assets/sprites/enemy.png');
+        this.enemy = this.spriteFactory.createSprite('sprites/enemy.png');
         this.weapon = this.spriteFactory.createMissile();
 
         this.spaceship.loadWeapon(this.weapon, this.enemy);
@@ -53,9 +53,6 @@ export class MyGame extends SPG.GameController {
             sprite.phisic.setPosition({ posX: sprite.posX + sprite.velocityX, posY: sprite.posY + sprite.velocityY });
 
         };
-
-        this.enemy = this.spriteFactory.createSprite(`${SPG.spriteRoot}/enemy.png`);
-
 
         this.enemy.onUpdate = (sprite: ISprite) => {
             sprite.phisic.moveLeft(Keys.A);
