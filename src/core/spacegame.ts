@@ -8,5 +8,6 @@ export const SPG = {
     Game: (gameController: GameControllerConstructor) => {
         return new gameController();
     },
-    AssetLoader: AssetLoader.getInstance()
+    AssetLoader: AssetLoader.getInstance(),
+    spriteRoot: 'sprites',
 };
