@@ -7,5 +7,5 @@
  */
 export interface IDrawable {
     spriteId?: number;
-    draw(ctx: CanvasRenderingContext2D, x?: number, y?: number): void
+    draw(ctx: CanvasRenderingContext2D, x?: number, y?: number): void;
 }

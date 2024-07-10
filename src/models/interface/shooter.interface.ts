@@ -19,10 +19,12 @@ export interface Shooter extends IDrawable {
      * @param weapon - The weapon to be fired.
      * @param key - The key that was pressed.
      */
-    shoot(weapon: IWeapon, key: Keys): void;
+    shoot( key?: Keys): void;
 
     /**
      * Updates the weapons of the shooter.
      */
     updateWeapons(): void;
+
+    loadedWeapon: IWeapon;
 }

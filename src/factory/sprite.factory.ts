@@ -8,6 +8,7 @@ import { AbstractSpriteFactory } from "./sprite.abstract.factory";
 import { SpriteAnimation } from "../models/classes/animation.controller";
 import { IDrawable } from "../models/interface/drawable.interface";
 import { AssetLoader } from "../utils/assetloader.utils";
+import { ISprite } from "../models/interface/sprite.interface";
 
 export class SpriteFactory implements AbstractSpriteFactory {
 
@@ -29,7 +30,8 @@ export class SpriteFactory implements AbstractSpriteFactory {
         const size: ISize = { width: imageFromSrc.naturalWidth, height: imageFromSrc.naturalHeight };
         const canvas = this.render.getCanvas();
         sprite.setSize(size);
-        sprite.setPosition({ posX: canvas.width / 2 - size.width / 2, posY: canvas.height / 8 });
+        sprite.phisic.setPosition({ posX: canvas.width / 2 - size.width / 2, posY: canvas.height / 8 });
+        this.spritesToDraw.push(sprite);
         return sprite;
     }
 
@@ -46,13 +48,15 @@ export class SpriteFactory implements AbstractSpriteFactory {
         const canvas = this.render.getCanvas();
         const spaceship = new Spaceship(imageFromSrc, this.render);
         const size: ISize = { width: imageFromSrc.naturalWidth, height: imageFromSrc.naturalHeight }
-        spaceship.setPosition({ posX: canvas.width / 2, posY: canvas.height / 1.2 });
+        spaceship.phisic.setPosition({ posX: canvas.width / 2, posY: canvas.height / 1.2 });
         spaceship.setSize(size);
+        this.spritesToDraw.push(spaceship);
         return spaceship;
     }
 
     public createMissile(): Sprite {
         const missileImage = this.assetLoader.getImage('assets/sprites/missile.png');
+        this.spritesToDraw.push(new Missile(missileImage, this.render));
         return new Missile(missileImage, this.render);
     }
 
