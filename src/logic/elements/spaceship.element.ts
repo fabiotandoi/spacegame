@@ -1,4 +1,3 @@
-import { SpriteFactory } from '../../factory/sprite.factory';
 import { IPosition } from '../../models/interface/position.interface';
 import { IRender } from '../../models/interface/render.interface';
 import { Shooter } from '../../models/interface/shooter.interface';
