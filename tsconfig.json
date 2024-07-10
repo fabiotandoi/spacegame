@@ -1,17 +1,11 @@
 {
   "compilerOptions": {
-    "target": "es6",
-    "module": "esnext",
+    "target": "ESNext",
+    "module": "ESNext",
     "moduleResolution": "node",
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "outDir": "./public",
-    "rootDir": "./src",
     "strict": false,
-    "esModuleInterop": true
-  },
-  "tsc-alias": {
-    "resolveFullPaths": true
+    "isolatedModules": true,
+    "noEmit": true
   },
   "include": ["src"]
 }

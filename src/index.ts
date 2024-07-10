@@ -22,10 +22,10 @@ export class MyGame extends SPG.GameController {
         super();
     }
     preload(): void {
-        this.assetLoader.loadAsset('assets/sprites/missile.png');
-        this.assetLoader.loadAsset('assets/sprites/enemy.png');
-        this.assetLoader.loadAsset('assets/sprites/spaceship.png');
-        this.assetLoader.loadAsset('assets/sprites/explosionblue.png');
+        this.assetLoader.loadAsset(`${SPG.spriteRoot}/missile.png`);
+        this.assetLoader.loadAsset(`${SPG.spriteRoot}/enemy.png`);
+        this.assetLoader.loadAsset(`${SPG.spriteRoot}/explosionblue.png`);
+        this.assetLoader.loadAsset(`${SPG.spriteRoot}/spaceship.png`);
     }
 
     load() {
@@ -50,7 +50,7 @@ export class MyGame extends SPG.GameController {
 
         };
 
-        this.enemy = this.spriteFactory.createSprite('assets/sprites/enemy.png');
+        this.enemy = this.spriteFactory.createSprite(`${SPG.spriteRoot}/enemy.png`);
 
         this.enemy.onUpdate = (sprite: Spaceship, input: InputHandler) => {
             if (input.isKeyPressed(Keys.A)) sprite.moveLeft();

@@ -16,8 +16,6 @@ export class Spaceship extends Sprite implements Shooter {
     acceleration: number = 0.2;
     friction: number = 0.98;
     maxSpeed: number = 8;
-    canvasWidth: number;
-    canvasHeight: number;
     weapons: IWeapon[] = [];
     lastShootTime = 0;
     shootCooldown = 800; // Cooldown di 500ms

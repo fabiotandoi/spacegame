@@ -42,7 +42,7 @@ export class SpriteFactory implements AbstractSpriteFactory {
     
 
     public createSpaceShip(): Spaceship {
-        const imageFromSrc = this.assetLoader.getImage('assets/sprites/spaceship.png');
+        const imageFromSrc = this.assetLoader.getImage('sprites/spaceship.png');
         const canvas = this.render.getCanvas();
         const spaceship = new Spaceship(imageFromSrc, this.render);
         const size: ISize = { width: imageFromSrc.naturalWidth, height: imageFromSrc.naturalHeight }
@@ -52,12 +52,12 @@ export class SpriteFactory implements AbstractSpriteFactory {
     }
 
     public createMissile(): Sprite {
-        const missileImage = this.assetLoader.getImage('assets/sprites/missile.png');
+        const missileImage = this.assetLoader.getImage('sprites/missile.png');
         return new Missile(missileImage, this.render);
     }
 
     public createAnimation(loop = false): SpriteAnimation {
-        const explosionImage = this.assetLoader.getImage('assets/sprites/explosionblue.png');
+        const explosionImage = this.assetLoader.getImage('sprites/explosionblue.png');
         explosionImage.style.color = "green";
         this.animation = new SpriteAnimation(explosionImage, 80, 80, 5, 50, loop);
         return this.animation;
