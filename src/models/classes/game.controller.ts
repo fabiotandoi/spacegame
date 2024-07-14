@@ -3,9 +3,10 @@ import { AssetLoader } from '../../utils/assetloader.utils';
 import { Render } from '../../utils/render';
 import { IAssetLoader } from '../interface/assetLoader.interface';
 import { IRender } from '../interface/render.interface';
+import { ISprite } from '../interface/sprite.interface';
 export class GameControllerBase {
 
-    render: IRender = Render.getInstance();
+    private render: IRender = Render.getInstance();
     spriteFactory: SpriteFactory = SpriteFactory.getInstance();
     assetLoader: IAssetLoader = AssetLoader.getInstance();
 
@@ -19,15 +20,15 @@ export class GameControllerBase {
     private async run() {
         this.preload();
         await this.assetLoader.loadPromisesAssets();
-        this.load(4);
+        this.load();
         this.gameLoop();
     }
 
-    protected load(delta: number): void {
+    protected load(): void {
     }
 
     public update(): void {
-        //this.spriteFactory.spritesToDraw.forEach(sprite => sprite.updateSprite());
+        this.spriteFactory.spritesToDraw.forEach((sprite:ISprite) => sprite.updateSprite());
     }
 
     public gameLoop(): void {

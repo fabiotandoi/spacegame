@@ -8,7 +8,6 @@ import { AbstractSpriteFactory } from "./sprite.abstract.factory";
 import { SpriteAnimation } from "../models/classes/animation.controller";
 import { IDrawable } from "../models/interface/drawable.interface";
 import { AssetLoader } from "../utils/assetloader.utils";
-import { ISprite } from "../models/interface/sprite.interface";
 
 export class SpriteFactory implements AbstractSpriteFactory {
 
@@ -22,7 +21,6 @@ export class SpriteFactory implements AbstractSpriteFactory {
     private constructor() {
         this.render = Render.getInstance();
     }
-
 
     public createSprite(image: string): Sprite {
         const imageFromSrc = this.assetLoader.getImage(image);

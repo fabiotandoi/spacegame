@@ -99,23 +99,23 @@ export class MyGame extends SPG.GameController {
             sprite.phisic.setMaxSpeedLimit(50);
         };
 
-        // Create the legend
+       /*  // Create the legend
         this.legend = new Legend(this.enemy);
 
         // Add the legend to the list of sprites to draw
-        this.spriteFactory.spritesToDraw.push(this.legend);
+        this.spriteFactory.spritesToDraw.push(this.legend); */
     }
 
     /**
      * Update the game state by calling the update methods of the spaceship and the enemy.
      */
-    update() {
+    /* update() {
         // Update the spaceship
-        this.spaceship.updateSprite();
+        //this.spaceship.updateSprite();
 
         // Update the enemy
-        this.enemy.updateSprite();
-    }
+        //this.enemy.updateSprite();
+    } */
 
 }
 

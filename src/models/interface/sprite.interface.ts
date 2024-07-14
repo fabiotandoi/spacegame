@@ -5,7 +5,6 @@ import { ISize } from "../interface/size.interface";
 import { IPhisicController } from "../classes/phisic.controller";
 
 export interface ISprite {
-  inputHandler: IInputHandler;
   image: HTMLImageElement;
   render: IRender;
   phisic: IPhisicController;
@@ -38,10 +37,7 @@ export interface ISprite {
   get friction(): number;
   set friction(value: number);
 
-  getPosition(): IPosition;
-  getSize(): ISize;
   setSize(size: ISize): void;
-  getImage(): HTMLImageElement
   isOffScreen(): boolean;
   draw(ctx: CanvasRenderingContext2D): void;
   onUpdate(...args: any[]): void;

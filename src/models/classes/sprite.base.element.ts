@@ -6,7 +6,8 @@ import { IRender } from "../interface/render.interface";
 import { ISprite } from "../interface/sprite.interface";
 import { SpriteFactory } from "../../factory/sprite.factory";
 import { SpriteAnimation } from "./animation.controller";
-import { PhisicController } from "./phisic.controller";
+import { IPhisicController } from "./phisic.controller";
+import { ControllersFactory } from "../../factory/controllers.factory";
 
 export class Sprite implements ISprite {
     inputHandler: IInputHandler = InputHandler.getInstance();
@@ -30,7 +31,7 @@ export class Sprite implements ISprite {
     render: IRender;
     onUpdate: (sprite: ISprite, input: IInputHandler) => void;
     animation?: SpriteAnimation;
-    phisic: PhisicController = new PhisicController(this);
+    phisic: IPhisicController = ControllersFactory.createPhisicController(this);
 
     constructor(image: HTMLImageElement, render: IRender) {
         this.render = render;
@@ -77,18 +78,6 @@ export class Sprite implements ISprite {
             this.posY = this.canvasHeight - halfHeight;
             this.velocityY = -this.velocityY;
         }
-    }
-
-    getPosition(): IPosition {
-        return <IPosition>{ posX: this.posX, posY: this.posY };
-    }
-
-    getSize(): ISize {
-        return <ISize>{ width: this.width, height: this.height };
-    }
-
-    getImage(): HTMLImageElement {
-        return this.image;
     }
 
     isOffScreen(): boolean {
