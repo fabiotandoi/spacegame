@@ -3,7 +3,19 @@ import { Keys } from '../../utils/key.enum';
 import { IPosition } from '../interface/position.interface';
 import { ISprite } from '../interface/sprite.interface';
 import { IInputHandler } from '../interface/inputHandler.interface';
-export class PhisicController {
+
+
+export interface IPhisicController {
+    setPosition(position: IPosition): void;
+    moveUp(key: Keys): void;
+    moveDown(key: Keys): void;
+    moveLeft(key: Keys): void;
+    moveRight(key: Keys): void;
+    applyFriction(): void;
+    setMaxSpeedLimit(maxSpeed: number): void;
+}
+
+export class PhisicController implements IPhisicController {
 
     private inputHandler: IInputHandler = InputHandler.getInstance();
 

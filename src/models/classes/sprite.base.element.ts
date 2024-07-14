@@ -44,10 +44,7 @@ export class Sprite implements ISprite {
         if (typeof (this.onUpdate) === 'function') {
             this.onUpdate(this, this.inputHandler);
         };
-
         this.checkCollisions();
-
-
         this.phisic.setPosition({ posX: this.posX + this.velocityX, posY: this.posY + this.velocityY });
     }
 

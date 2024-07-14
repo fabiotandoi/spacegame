@@ -1,10 +1,4 @@
-export interface IAssetLoader {
-    loadImage(path: string): Promise<HTMLImageElement>;
-    getImage(path: string): HTMLImageElement;
-    loadPromisesAssets(): Promise<HTMLImageElement[]>;
-    loadAsset(path: string): void;
-}
-
+import { IAssetLoader } from "../models/interface/assetLoader.interface";
 
 
 export class AssetLoader implements IAssetLoader {

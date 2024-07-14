@@ -1,8 +1,8 @@
 import { SpriteFactory } from '../../factory/sprite.factory';
-import { AssetLoader, IAssetLoader } from '../../utils/assetloader.utils';
+import { AssetLoader } from '../../utils/assetloader.utils';
 import { Render } from '../../utils/render';
+import { IAssetLoader } from '../interface/assetLoader.interface';
 import { IRender } from '../interface/render.interface';
-import { ISprite } from '../interface/sprite.interface';
 export class GameControllerBase {
 
     render: IRender = Render.getInstance();
