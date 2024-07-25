@@ -8,6 +8,7 @@ import { IWeapon } from '../../models/interface/weapon.interface';
 import { Sprite } from '../../models/classes/sprite.base.element';
 import { ISprite } from '../../models/interface/sprite.interface';
 import { SpriteAnimation } from '../../models/classes/animation.controller';
+import { IInteractiveElement } from './refactor.temp.elements';
 
 
 export class Spaceship extends Sprite implements Shooter {
@@ -23,6 +24,7 @@ export class Spaceship extends Sprite implements Shooter {
     target: ISprite;
     explotionAnimation?: SpriteAnimation;
     loadedWeapon: IWeapon;
+    newWeapons: IInteractiveElement[] = [];
 
 
     constructor(image: HTMLImageElement, render: IRender) {
@@ -45,6 +47,9 @@ export class Spaceship extends Sprite implements Shooter {
     updateWeapons() {
         this.weapons.forEach(weapon => weapon.updateSprite(this.target));
         this.weapons = this.weapons.filter(weapon => !weapon.isOffScreen());
+
+        this.newWeapons.forEach(weapon => weapon.updateSprite(this.target));
+        this.newWeapons = this.newWeapons.filter(weapon => !weapon.isOffScreen());
     }
 
     loadWeapon(weapon: IWeapon, target: ISprite) {
@@ -75,6 +80,32 @@ export class Spaceship extends Sprite implements Shooter {
     }
     }
 
+    newShoot(key: Keys) {
+       
+
+        if (this.inputHandler.isKeyPressed(key)) { // Controllo se la key è premuta
+            const currentTime = Date.now();
+            if ((currentTime - this.lastShootTime) > this.shootCooldown) {
+    
+                const position = <IPosition>{
+                    posX: this.posX,
+                    posY: this.posY - this.height / 2
+                };
+                const size = <ISize>{
+                    width: 16,
+                    height: 32
+                };
+                const newWeapon = this.spriteFactory.createInteractiveMissile();
+                
+                newWeapon.setPosition(position);
+                newWeapon.setSize(size);
+                this.newWeapons.push(newWeapon);
+                this.lastShootTime = currentTime;
+            }
+        }
+
+    }
+
     checkCollisions() {
         const halfWidth = this.width / 2;
         const halfHeight = this.height / 2;
@@ -103,6 +134,7 @@ export class Spaceship extends Sprite implements Shooter {
     draw(ctx: CanvasRenderingContext2D) {
         ctx.drawImage(this.image, this.posX - this.width / 2, this.posY - this.height / 2, this.width, this.height);
         this.weapons.forEach(missile => missile.draw(ctx));
+        this.newWeapons.forEach(missile => missile.draw(ctx));
         this.explotionAnimation.draw(ctx);
     }
 }

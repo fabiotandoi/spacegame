@@ -8,6 +8,8 @@ import { AbstractSpriteFactory } from "./sprite.abstract.factory";
 import { SpriteAnimation } from "../models/classes/animation.controller";
 import { IDrawable } from "../models/interface/drawable.interface";
 import { AssetLoader } from "../utils/assetloader.utils";
+import { ISprite } from "../models/interface/sprite.interface";
+import { IInteractiveElement, InteractiveMissile } from "../logic/elements/refactor.temp.elements";
 
 export class SpriteFactory implements AbstractSpriteFactory {
 
@@ -16,6 +18,7 @@ export class SpriteFactory implements AbstractSpriteFactory {
     animation: SpriteAnimation;
     spritesToDraw: IDrawable[] = [];
     assetLoader: AssetLoader = AssetLoader.getInstance();
+    private  sprites: { [key: string]: ISprite } = {};
 
 
     private constructor() {
@@ -63,4 +66,34 @@ export class SpriteFactory implements AbstractSpriteFactory {
         this.animation = new SpriteAnimation(explosionImage, 80, 80, 5, 50, loop);
         return this.animation;
     }
+
+    /**
+     * @Pattern Factory and Flyweight
+     * @description Create an interactive element
+     * @returns IInteractiveElement
+     */
+    createInteractiveMissile():IInteractiveElement{
+
+        const missileImage = this.assetLoader.getImage('sprites/missile.png');
+        const key = 'missile';
+
+        if(!(key in this.sprites)){
+            this.sprites[key] = new Missile(missileImage, this.render);
+        }
+
+        return new InteractiveMissile(this.sprites[key]);
+    }
+
+    createInteractiveEnemy():IInteractiveElement{
+        const enemyImage = this.assetLoader.getImage('sprites/enemy.png');
+        const key = 'enemy';
+
+        if(!(key in this.sprites)){
+            this.sprites[key] = new Sprite(enemyImage, this.render);
+        }
+
+        return new InteractiveMissile(this.sprites[key]);
+    }
+
+
 }

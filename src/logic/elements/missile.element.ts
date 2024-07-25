@@ -6,7 +6,6 @@ import { ISprite } from '../../models/interface/sprite.interface';
 export class Missile extends Sprite implements IWeapon {
 
     velocityY: number = -5;
-    image: HTMLImageElement;
     hitted: boolean = false;
 
     constructor(image: HTMLImageElement, render: IRender) {

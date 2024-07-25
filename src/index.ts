@@ -70,6 +70,7 @@ export class MyGame extends SPG.GameController {
 
             // Shoot the weapon
             sprite.shoot(Keys.X);
+            sprite.newShoot(Keys.Z);
 
             // Apply friction to the spaceship
             sprite.phisic.applyFriction();
@@ -99,11 +100,11 @@ export class MyGame extends SPG.GameController {
             sprite.phisic.setMaxSpeedLimit(50);
         };
 
-       /*  // Create the legend
-        this.legend = new Legend(this.enemy);
-
-        // Add the legend to the list of sprites to draw
-        this.spriteFactory.spritesToDraw.push(this.legend); */
+        /*  // Create the legend
+         this.legend = new Legend(this.enemy);
+ 
+         // Add the legend to the list of sprites to draw
+         this.spriteFactory.spritesToDraw.push(this.legend); */
     }
 
     /**

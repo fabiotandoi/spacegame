@@ -20,8 +20,8 @@ export class Legend {
     draw(ctx: CanvasRenderingContext2D) {
         ctx.font = '16px Arial';
         ctx.fillStyle = 'white';
-        ctx.fillText(`Posizione X: ${this.spaceship.getPosition().posX.toFixed(2)}`, 10, 20);
-        ctx.fillText(`Posizione Y: ${this.spaceship.getPosition().posY.toFixed(2)}`, 10, 40);
+        ctx.fillText(`Posizione X: ${this.spaceship.posX.toFixed(2)}`, 10, 20);
+        ctx.fillText(`Posizione Y: ${this.spaceship.posY.toFixed(2)}`, 10, 40);
         ctx.fillText(`Velocità X: ${this.spaceship.velocityX.toFixed(2)}`, 10, 60);
         ctx.fillText(`Velocità Y: ${this.spaceship.velocityY.toFixed(2)}`, 10, 80);
     }

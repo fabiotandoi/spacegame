@@ -10,32 +10,15 @@ export interface ISprite {
   phisic: IPhisicController;
   destroyed: boolean;
 
-  get posX(): number;
-  set posX(value: number);
-
-  get posY(): number;
-  set posY(value: number);
-
-  get width(): number;
-  set width(value: number);
-
-  get height(): number;
-  set height(value: number);
-
-  get velocityX(): number;
-  set velocityX(value: number);
-
-  get velocityY(): number;
-  set velocityY(value: number);
-
-  get maxSpeed(): number;
-  set maxSpeed(value: number);
-
-  get acceleration(): number;
-  set acceleration(value: number);
-
-  get friction(): number;
-  set friction(value: number);
+  posX: number;
+  posY: number;
+  width: number;
+  height: number;
+  velocityX: number;
+  velocityY: number;
+  maxSpeed: number;
+  acceleration: number;
+  friction: number;
 
   setSize(size: ISize): void;
   isOffScreen(): boolean;
